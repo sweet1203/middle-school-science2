@@ -22,7 +22,7 @@
 <div class="hero">
   <span class="unit">📒 오답 노트</span>
   <h1>나의 오답 노트</h1>
-  <p class="lead">각 차시의 확인 문제와 총정리에서 틀린 문제가 자동으로 모여요. 다시 풀어서 맞히면 목록에서 빠져요.</p>
+  <p class="lead">각 차시의 확인 문제와 총정리에서 틀린 문제가 자동으로 모여요. 객관식은 <b>보기 순서가 섞여서</b> 나오니 번호가 아니라 내용으로 풀어 보세요. 맞히면 목록에서 빠져요.</p>
   <div class="grid-3" id="stats"></div>
   <p class="small muted" style="margin:12px 0 0">🔒 오답 기록은 <b>지금 쓰는 기기의 이 브라우저에만</b> 저장돼요. 다른 기기나 다른 브라우저에서는 보이지 않고, 브라우저 기록(사이트 데이터)을 지우면 함께 지워져요.</p>
 </div>
@@ -117,7 +117,7 @@
       g.innerHTML = "<h3>🔀 섞어서 풀기 · " + all.length + "문제</h3>";
       var box = document.createElement("div");
       g.appendChild(box); list.appendChild(g);
-      S2.quiz(box, all.map(toItem), Object.assign({}, opts, { score: true }));
+      S2.quiz(box, all.map(toItem).map(S2.shuffleOptions), Object.assign({}, opts, { score: true }));
       return;
     }
     // 차시별로 묶기 (정렬 순서를 유지하면서 처음 나온 차시 순)
@@ -133,7 +133,7 @@
       sec.innerHTML = "<h3>" + (info.unit ? '<span class="chip acc">' + info.unit + "</span>" : "") + info.title + ' <a href="' + gr.page + '">개념 다시 보기 →</a></h3>';
       var box = document.createElement("div");
       sec.appendChild(box); list.appendChild(sec);
-      S2.quiz(box, gr.items.map(toItem), Object.assign({ page: gr.page }, opts));
+      S2.quiz(box, gr.items.map(toItem).map(S2.shuffleOptions), Object.assign({ page: gr.page }, opts));
     });
   }
 

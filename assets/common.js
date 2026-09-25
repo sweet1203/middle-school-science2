@@ -184,6 +184,27 @@
     document.querySelectorAll("#" + containerId + " .blank").forEach(function (b) { b.classList.toggle("open", open); });
   };
 
+  /* ---------- 보기 순서 섞기 ----------
+   객관식 보기만 섞고, 정답 번호(a)를 새 위치로 옮긴다.
+   문제나 해설에 ①~⑦ 같은 보기 번호가 들어 있으면 번호가 어긋나므로 섞지 않는다.
+  */
+  S2.shuffleOptions = function (item) {
+    if (!item || item.t !== "mc" || !Array.isArray(item.o) || item.o.length < 2) return item;
+    if (/[①-⑦]/.test(String(item.q || "") + String(item.e || ""))) return item;
+    var n = item.o.length, perm, tries = 0;
+    do {
+      perm = [];
+      for (var i = 0; i < n; i++) perm.push(i);
+      for (var k = n - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = perm[k]; perm[k] = perm[j]; perm[j] = t; }
+      tries++;
+    } while (tries < 10 && perm.every(function (v, idx) { return v === idx; }));
+    var o = perm.map(function (idx) { return item.o[idx]; });
+    var a = perm.indexOf(item.a);
+    // 안전 확인: 정답 보기 내용이 그대로인지, 보기 개수가 같은지
+    if (a < 0 || o[a] !== item.o[item.a] || o.length !== n) return item;
+    return Object.assign({}, item, { o: o, a: a });
+  };
+
   /* ---------- 퀴즈 엔진 ----------
    items: [{t:'mc', q, o:[...], a:index, e:'해설', tag}, {t:'ox', q, a:true/false, e}, {t:'short', q, a:['정답','허용답'], e}]
   */
@@ -308,7 +329,7 @@
       box = document.createElement("div");
       box.className = "score-box";
       box.innerHTML = '<div><span class="s"></span><div class="small muted">다시 풀면 푼 흔적만 지워지고 📒 오답 노트는 그대로 남아요.</div></div>' +
-        '<div class="row" style="gap:6px"><button class="btn primary" data-k="shuffle">🔄 다시 풀기 (순서 섞기)</button>' +
+        '<div class="row" style="gap:6px"><button class="btn primary" data-k="shuffle">🔄 다시 풀기 (문제·보기 순서 섞기)</button>' +
         (orig.length > 1 ? '<button class="btn" data-k="orig">원래 순서로</button>' : "") + "</div>";
       box.querySelector('[data-k="shuffle"]').onclick = function () {
         var a = orig.slice(), tries = 0;
@@ -316,7 +337,7 @@
           for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
           tries++;
         } while (a.length > 1 && tries < 5 && a.every(function (x, k) { return x === items[k]; }));
-        restart(a);
+        restart(a.map(S2.shuffleOptions));
       };
       var ob = box.querySelector('[data-k="orig"]');
       if (ob) ob.onclick = function () { restart(orig); };
