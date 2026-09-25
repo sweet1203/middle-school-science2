@@ -18,10 +18,42 @@
     { file: "07-parallax.html", unit: "Ⅶ-1 별", title: "연주 시차와 거리" },
     { file: "08-magnitude.html", unit: "Ⅶ-1 별", title: "별의 밝기와 등급" },
     { file: "09-star-color.html", unit: "Ⅶ-1 별", title: "별의 색과 표면 온도" },
-    { file: "10-review.html", unit: "총정리", title: "시험 대비 총정리" }
+    { file: "10-review.html", unit: "총정리", title: "시험 대비 총정리" },
+    { file: "wrong-notes.html", unit: "오답 노트", title: "나의 오답 노트", nav: false }
   ];
 
   var S2 = window.S2 = { store: store, PAGES: PAGES };
+
+  /* ---------- 오답 노트 (이 기기의 브라우저에만 저장) ---------- */
+  var WKEY = "s2-wrong-v1";
+  function wid(page, q) {
+    var s = page + "|" + q, h = 0;
+    for (var i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0; }
+    return "w" + (h >>> 0).toString(36);
+  }
+  S2.wrong = {
+    all: function () {
+      try { var v = JSON.parse(store.get(WKEY) || "[]"); return Array.isArray(v) ? v : []; } catch (e) { return []; }
+    },
+    save: function (list) { store.set(WKEY, JSON.stringify(list)); S2.wrong.badge(); },
+    add: function (item, page) {
+      if (!item || item.t === "essay") return;
+      var list = S2.wrong.all(), id = item._wid || wid(page, item.q), now = Date.now();
+      var cur = list.filter(function (x) { return x.id === id; })[0];
+      if (cur) { cur.miss = (cur.miss || 1) + 1; cur.last = now; }
+      else {
+        list.push({ id: id, page: item._page || page, t: item.t, q: item.q, o: item.o, a: item.a, e: item.e || "", tag: item._origTag != null ? item._origTag : (item.tag || ""), miss: 1, first: now, last: now });
+      }
+      S2.wrong.save(list);
+    },
+    remove: function (id) { S2.wrong.save(S2.wrong.all().filter(function (x) { return x.id !== id; })); },
+    clear: function () { S2.wrong.save([]); },
+    idOf: function (item, page) { return item._wid || wid(page, item.q); },
+    badge: function () {
+      var n = S2.wrong.all().length;
+      document.querySelectorAll(".wn-count").forEach(function (b) { b.textContent = n; b.style.display = n ? "" : "none"; });
+    }
+  };
 
   /* ---------- 테마 / 발표 모드 ---------- */
   var theme = store.get("s2-theme");
@@ -60,6 +92,7 @@
       '<span class="crumb">' + (page.unit ? page.unit + " · " + page.title : "생식과 유전 · 별") + "</span>" +
       '<span class="spacer"></span>' +
       '<div class="tools">' +
+      '<a class="icon-btn wn-btn" href="wrong-notes.html" title="틀린 문제만 모아 보기 (이 기기에 저장)">📒 오답 <b class="wn-count"></b></a>' +
       '<button class="icon-btn" data-act="big" title="글자 크게 (발표 모드)">가+ 발표</button>' +
       '<button class="icon-btn" data-act="theme" title="밝게/어둡게">🌓</button>' +
       '<button class="icon-btn" data-act="print" title="인쇄 / PDF 저장">🖨</button>' +
@@ -101,10 +134,14 @@
 
     // 이전 / 다음
     var main = document.querySelector("main");
-    if (main && idx > 0) {
+    var NAV = PAGES.filter(function (p) { return p.nav !== false; });
+    var nidx = -1;
+    NAV.forEach(function (p, i) { if (p.file === file) nidx = i; });
+    S2.wrong.badge();
+    if (main && nidx > 0) {
       var pager = document.createElement("nav");
       pager.className = "pager";
-      var prev = PAGES[idx - 1], next = PAGES[idx + 1];
+      var prev = NAV[nidx - 1], next = NAV[nidx + 1];
       pager.innerHTML =
         (prev ? '<a class="prev" href="' + prev.file + '"><small>← 이전 차시</small>' + prev.title + "</a>" : "<span></span>") +
         (next ? '<a class="next" href="' + next.file + '"><small>다음 차시 →</small>' + next.title + "</a>" : "");
@@ -163,19 +200,30 @@
     function update() {
       if (box) box.querySelector(".s").textContent = "맞힌 문제 " + score + " / " + scorable + " (푼 문제 " + answered + ")";
     }
-    function feedback(q, ok, item) {
+    var page = opts.page || currentFile();
+    function feedback(q, ok, item, msg) {
       var fb = q.querySelector(".fb");
       fb.className = "fb show " + (ok ? "ok" : "no");
-      fb.innerHTML = (ok ? "<b>⭕ 정답!</b> " : "<b>❌ 다시 확인!</b> ") + (item.e || "");
+      var note = "";
+      if (!ok) {
+        S2.wrong.add(item, page);
+        note = ' <span class="wn-note">📒 오답 노트에 저장했어요.</span>';
+      } else if (opts.review) {
+        S2.wrong.remove(S2.wrong.idOf(item, page));
+        note = ' <span class="wn-note">✅ 맞혔으니 오답 노트에서 뺐어요.</span>';
+      }
+      fb.innerHTML = (ok ? "<b>⭕ 정답!</b> " : "<b>❌ 다시 확인!</b> ") + (msg || "") + note;
       answered++; if (ok) score++;
       update();
+      if (opts.onAnswer) opts.onAnswer(item, ok);
     }
 
     items.forEach(function (item, i) {
       var q = document.createElement("div");
       q.className = "q";
       var tag = item.tag ? '<span class="tag">' + item.tag + "</span>" : "";
-      q.innerHTML = '<div class="qh"><span class="qn">Q' + (i + 1) + '.</span><span class="qt">' + item.q + tag + "</span></div>" +
+      q.innerHTML = '<div class="qh"><span class="qn">Q' + (i + 1) + '.</span><span class="qt">' + item.q + tag + "</span>" +
+        (opts.review ? '<button class="btn wn-del" title="오답 노트에서 빼기">✕ 빼기</button>' : "") + "</div>" +
         (item.fig ? '<div class="figure">' + item.fig + "</div>" : "");
       if (item.t === "mc") {
         var o = document.createElement("div"); o.className = "opts";
@@ -187,7 +235,7 @@
             bs.forEach(function (x) { x.disabled = true; });
             bs[item.a].classList.add("right");
             if (k !== item.a) b.classList.add("wrong");
-            feedback(q, k === item.a, { e: (k === item.a ? "" : "정답은 <b>" + circled[item.a] + "</b>. ") + (item.e || "") });
+            feedback(q, k === item.a, item, (k === item.a ? "" : "정답은 <b>" + circled[item.a] + "</b>. ") + (item.e || ""));
           };
           o.appendChild(b);
         });
@@ -202,7 +250,7 @@
             bs.forEach(function (x) { x.disabled = true; });
             bs[item.a ? 0 : 1].classList.add("right");
             if (p[1] !== item.a) b.classList.add("wrong");
-            feedback(q, p[1] === item.a, { e: (p[1] === item.a ? "" : "정답은 <b>" + (item.a ? "O" : "X") + "</b>. ") + (item.e || "") });
+            feedback(q, p[1] === item.a, item, (p[1] === item.a ? "" : "정답은 <b>" + (item.a ? "O" : "X") + "</b>. ") + (item.e || ""));
           };
           ox.appendChild(b);
         });
@@ -217,13 +265,13 @@
           if (done || !inp.value.trim()) return;
           done = true; inp.disabled = true;
           var ok = item.a.some(function (a) { return norm(a) === norm(inp.value); });
-          feedback(q, ok, { e: "정답: <b>" + item.a[0] + "</b>. " + (item.e || "") });
+          feedback(q, ok, item, "정답: <b>" + item.a[0] + "</b>. " + (item.e || ""));
         };
         bs2[0].onclick = check;
         inp.addEventListener("keydown", function (e) { if (e.key === "Enter") check(); });
         bs2[1].onclick = function () {
           if (done) return; done = true; inp.disabled = true;
-          feedback(q, false, { e: "정답: <b>" + item.a[0] + "</b>. " + (item.e || "") });
+          feedback(q, false, item, "정답: <b>" + item.a[0] + "</b>. " + (item.e || ""));
         };
         q.appendChild(s);
       } else if (item.t === "essay") {
@@ -234,6 +282,13 @@
         q.appendChild(w);
       }
       var fb = document.createElement("div"); fb.className = "fb"; q.appendChild(fb);
+      if (opts.review) {
+        q.querySelector(".wn-del").onclick = function () {
+          S2.wrong.remove(S2.wrong.idOf(item, page));
+          q.remove();
+          if (opts.onRemove) opts.onRemove(item);
+        };
+      }
       el.appendChild(q);
     });
 

@@ -19,6 +19,7 @@
 | `08-magnitude.html` | 별의 밝기와 등급 |
 | `09-star-color.html` | 별의 색과 표면 온도 |
 | `10-review.html` | 시험 대비 총정리 |
+| `wrong-notes.html` | 나의 오답 노트 (틀린 문제 자동 저장, 이 기기에만 저장) |
 
 ## 표시 읽는 법
 
