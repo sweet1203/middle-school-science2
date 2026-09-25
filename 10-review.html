@@ -98,7 +98,6 @@
 <section class="block" id="quiz-sec">
   <h2><span class="num">4</span>종합 문제 20</h2>
   <div class="row" style="margin-bottom:10px">
-    <button class="btn" id="shuffle">🔀 순서 섞어서 다시 풀기</button>
     <a class="btn" href="wrong-notes.html">📒 틀린 문제만 보기</a>
   </div>
   <div id="quiz"></div>
@@ -143,11 +142,6 @@
     { t: "mc", q: "표면 온도가 가장 높은 별은?", o: ["적색 베텔게우스", "황색 태양", "주황색 아크투루스", "백색 시리우스", "청백색 리겔"], a: 4, e: "" }
   ];
   S2.quiz("quiz", Q);
-  document.getElementById("shuffle").onclick = function () {
-    var a = Q.slice();
-    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
-    S2.quiz("quiz", a);
-  };
 
   S2.quiz("essays", [
     { t: "essay", q: "세포 분열이 필요한 까닭을 <b>부피, 표면적, 물질 교환</b>을 포함하여 서술하시오.", a: "세포가 커지면 부피에 대한 표면적의 비가 작아져 물질 교환이 원활하지 않으므로, 일정 크기가 되면 분열하여 세포 수를 늘린다." },

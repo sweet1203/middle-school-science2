@@ -313,3 +313,8 @@ details.adv > summary small { font-weight: 400; color: var(--muted); }
   .topbar .crumb { display: none; }
   .icon-btn { padding: 6px 8px; }
 }
+@media (max-width: 520px) {
+  .score-box { padding: 8px 12px; bottom: 8px; }
+  .score-box .small.muted { display: none; }
+  .score-box .btn { padding: 6px 10px; font-size: .85rem; }
+}

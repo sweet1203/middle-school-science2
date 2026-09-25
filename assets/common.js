@@ -292,11 +292,34 @@
       el.appendChild(q);
     });
 
-    if (scorable > 3 && opts.score !== false) {
+    if (scorable > 0 && opts.score !== false) {
+      // 다시 풀기: 푼 흔적(선택·정답 표시·해설)만 지우고, 오답 노트 기록은 그대로 둔다
+      var orig = opts._orig || items;
+      var restart = function (list) {
+        if (opts.review) {
+          var ids = {};
+          S2.wrong.all().forEach(function (x) { ids[x.id] = 1; });
+          list = list.filter(function (x) { return ids[S2.wrong.idOf(x, page)]; });
+        }
+        S2.quiz(el, list, Object.assign({}, opts, { _orig: orig }));
+        var top = el.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
+      };
       box = document.createElement("div");
       box.className = "score-box";
-      box.innerHTML = '<span class="s"></span><button class="btn">처음부터 다시</button>';
-      box.querySelector("button").onclick = function () { S2.quiz(el, items, opts); };
+      box.innerHTML = '<div><span class="s"></span><div class="small muted">다시 풀면 푼 흔적만 지워지고 📒 오답 노트는 그대로 남아요.</div></div>' +
+        '<div class="row" style="gap:6px"><button class="btn primary" data-k="shuffle">🔄 다시 풀기 (순서 섞기)</button>' +
+        (orig.length > 1 ? '<button class="btn" data-k="orig">원래 순서로</button>' : "") + "</div>";
+      box.querySelector('[data-k="shuffle"]').onclick = function () {
+        var a = orig.slice(), tries = 0;
+        do {
+          for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+          tries++;
+        } while (a.length > 1 && tries < 5 && a.every(function (x, k) { return x === items[k]; }));
+        restart(a);
+      };
+      var ob = box.querySelector('[data-k="orig"]');
+      if (ob) ob.onclick = function () { restart(orig); };
       el.appendChild(box);
       update();
     }
