@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>수정과 발생</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/common.js"></script>
+<style>
+  .organ-info { min-height: 120px; }
+  .hot { cursor: pointer; }
+  .hot:hover > *:first-child, .hot.on > *:first-child { filter: brightness(1.12) drop-shadow(0 0 4px rgba(0,0,0,.25)); }
+  .hot text { pointer-events: none; }
+  .flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .flow .node { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; font-weight: 700; }
+  .flow .node small { display: block; font-weight: 400; color: var(--muted); font-size: .78rem; }
+  .flow .arr { color: var(--muted); }
+  .journey-stage { cursor: pointer; }
+  .journey-stage circle.ring { opacity: 0; }
+  .journey-stage.on circle.ring { opacity: 1; }
+  .tl { display: grid; gap: 0; border-left: 3px solid var(--accent); margin-left: 8px; }
+  .tl div { padding: 6px 0 14px 18px; position: relative; }
+  .tl div::before { content: ""; position: absolute; left: -9px; top: 12px; width: 15px; height: 15px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); }
+  .tl b.when { color: var(--accent-ink); }
+</style>
+</head>
+<body class="unit-repro">
+<div class="page">
+<nav class="toc"></nav>
+<main>
+
+<div class="hero">
+  <span class="unit">Ⅴ. 생식과 유전 · 1. 생식 · 4차시</span>
+  <h1>수정란이 개체가 되는 과정 — 수정과 발생</h1>
+  <p class="lead">지름 0.1 mm 남짓한 수정란 하나가 약 38주 뒤에는 3 kg이 넘는 아기가 돼요. 그 여행을 따라가 봐요.</p>
+  <ul class="goals">
+    <li>수정과 수정란의 염색체 수를 설명할 수 있다.</li>
+    <li>난할의 특징(세포 수, 세포 크기, 염색체 수)을 설명할 수 있다.</li>
+    <li>수정란이 개체가 되기까지의 과정을 순서대로 말할 수 있다.</li>
+  </ul>
+</div>
+
+<section class="block" id="cells">
+  <h2><span class="num">1</span>정자와 난자</h2>
+  <div class="grid-2">
+    <div class="card">
+      <svg viewBox="0 0 300 140" aria-label="정자 모양">
+        <ellipse cx="60" cy="70" rx="20" ry="14" fill="#60a5fa"/>
+        <ellipse cx="54" cy="70" rx="10" ry="8" fill="#1d4ed8"/>
+        <rect x="78" y="66" width="26" height="8" rx="4" fill="#93c5fd"/>
+        <path d="M104 70 C 140 40, 170 100, 200 70 S 260 40, 290 70" fill="none" stroke="#93c5fd" stroke-width="3"/>
+        <text x="50" y="108" font-size="12" fill="currentColor" text-anchor="middle">머리 (핵: 유전 물질)</text>
+        <text x="92" y="55" font-size="12" fill="currentColor" text-anchor="middle">중간 부분</text>
+        <text x="220" y="110" font-size="12" fill="currentColor" text-anchor="middle">꼬리 (운동)</text>
+      </svg>
+      <h3>정자 🔵</h3>
+      <ul class="small">
+        <li><b>정소</b>에서 감수 분열로 생성, 염색체 <b>23개</b></li>
+        <li>꼬리가 있어 <b>스스로 움직일 수 있음</b></li>
+        <li>크기가 매우 작음 (전체 길이 약 0.06 mm) <span class="xtag"></span></li>
+        <li>한 번에 수억 개가 방출되지만 수정하는 것은 보통 <b>1개</b> <span class="xtag"></span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <svg viewBox="0 0 300 140" aria-label="난자 모양">
+        <circle cx="150" cy="70" r="60" fill="#fecdd3" stroke="#e11d48" stroke-width="3"/>
+        <circle cx="150" cy="70" r="52" fill="#ffe4e6"/>
+        <circle cx="165" cy="60" r="16" fill="#e11d48" opacity=".85"/>
+        <text x="165" y="64" font-size="11" fill="#fff" text-anchor="middle">핵</text>
+        <text x="120" y="95" font-size="12" fill="#9f1239" text-anchor="middle">양분(세포질)</text>
+      </svg>
+      <h3>난자 🔴</h3>
+      <ul class="small">
+        <li><b>난소</b>에서 감수 분열로 생성, 염색체 <b>23개</b></li>
+        <li>스스로 움직이지 못함</li>
+        <li>사람 몸에서 <b>가장 큰 세포</b> (지름 약 0.1 mm), 발생에 필요한 <b>양분</b>을 저장 <span class="xtag"></span></li>
+        <li>보통 한 달에 1개씩 배출(배란)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout exam"><span class="t">수정</span>
+    정자(23) + 난자(23) → <b>수정란(46)</b>. 정자와 난자의 염색체 수가 체세포의 절반이므로 수정란의 염색체 수는 <b>체세포와 같아요</b>.
+  </div>
+</section>
+
+<section class="block" id="organs">
+  <h2><span class="num">2</span>사람의 생식 기관</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>여자의 생식 기관 <span class="small muted">(그림을 눌러 보세요)</span></h3>
+      <svg viewBox="0 0 400 300" id="female" aria-label="여자의 생식 기관 모식도">
+        <g class="hot" data-k="tube">
+          <path d="M160 95 C 120 70, 90 70, 70 95 M240 95 C 280 70, 310 70, 330 95" fill="none" stroke="#f472b6" stroke-width="14" stroke-linecap="round"/>
+          <text x="95" y="60" font-size="13" fill="currentColor" text-anchor="middle">수란관</text>
+        </g>
+        <g class="hot" data-k="ovary">
+          <g><ellipse cx="65" cy="130" rx="30" ry="20" fill="#fb7185"/><ellipse cx="335" cy="130" rx="30" ry="20" fill="#fb7185"/></g>
+          <text x="65" y="170" font-size="13" fill="currentColor" text-anchor="middle">난소</text>
+          <text x="335" y="170" font-size="13" fill="currentColor" text-anchor="middle">난소</text>
+        </g>
+        <g class="hot" data-k="uterus">
+          <path d="M150 90 L250 90 C 262 90, 262 110, 255 140 C 245 190, 225 215, 212 222 L188 222 C 175 215, 155 190, 145 140 C 138 110, 138 90, 150 90 Z" fill="#f9a8d4" stroke="#db2777" stroke-width="3"/>
+          <path d="M170 110 L230 110 C 225 160, 210 190, 200 200 C 190 190, 175 160, 170 110 Z" fill="#fce7f3"/>
+          <text x="200" y="150" font-size="14" fill="#831843" text-anchor="middle" font-weight="700">자궁</text>
+        </g>
+        <g class="hot" data-k="vagina">
+          <rect x="186" y="222" width="28" height="60" rx="8" fill="#fbcfe8" stroke="#db2777" stroke-width="2"/>
+          <text x="240" y="265" font-size="13" fill="currentColor">질</text>
+        </g>
+      </svg>
+      <div class="stat organ-info" id="f-info">기관을 눌러 하는 일을 확인하세요.</div>
+    </div>
+    <div class="card extra">
+      <h3>남자의 생식 기관</h3>
+      <p class="small muted">정자가 만들어져 몸 밖으로 나가는 길 (문제은행에는 정소와 "정자가 성숙하는 장소"(부정소)가 나와요)</p>
+      <div class="flow">
+        <span class="node">정소<small>정자 생성 (감수 분열)</small></span><span class="arr">→</span>
+        <span class="node">부정소<small>정자가 잠시 머물며 성숙</small></span><span class="arr">→</span>
+        <span class="node">수정관<small>정자가 이동하는 관</small></span><span class="arr">→</span>
+        <span class="node">요도<small>몸 밖으로</small></span>
+      </div>
+      <p style="margin-top:12px"><b>저정낭, 전립샘</b>: 정자의 운동과 생존을 돕는 액체를 만들어 정자와 섞이게 해요(정액).</p>
+      <div class="table-wrap"><table class="data">
+        <thead><tr><th>기관</th><th>하는 일</th><th>짝꿍 (여자)</th></tr></thead>
+        <tbody>
+          <tr><td>정소</td><td>정자 생성, 남성 호르몬 분비</td><td>난소</td></tr>
+          <tr><td>수정관</td><td>정자의 이동 통로</td><td>수란관</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="journey">
+  <h2><span class="num">3</span>배란에서 착상까지 — 수정란의 여행</h2>
+  <div class="card extra">
+    <p class="small muted" style="margin:0 0 6px">배란·수정·난할·포배·착상은 문제은행 범위예요. 날짜와 '상실배'(고등 용어)는 참고용이에요.</p>
+    <svg viewBox="0 0 720 260" id="jmap" aria-label="배란부터 착상까지의 경로">
+      <path d="M60 200 C 80 120, 140 70, 230 70 S 420 60, 520 100 S 640 170, 660 200" fill="none" stroke="#f9a8d4" stroke-width="30" stroke-linecap="round" opacity=".6"/>
+      <ellipse cx="40" cy="232" rx="36" ry="22" fill="#fb7185" opacity=".85"/>
+      <text x="40" y="236" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">난소</text>
+      <path d="M600 150 L 710 150 L 710 250 L 600 250 Z" fill="#f9a8d4" opacity=".7"/>
+      <text x="705" y="168" text-anchor="end" font-size="13" fill="#831843" font-weight="700">자궁 안쪽 벽</text>
+      <text x="330" y="40" text-anchor="middle" font-size="13" fill="currentColor" opacity=".8">수란관 (섬모 운동으로 자궁 쪽으로 이동)</text>
+      <g id="jstages"></g>
+    </svg>
+    <div class="stat" id="j-info" style="margin-top:10px"></div>
+  </div>
+  <div class="grid-2">
+    <div class="callout exam"><span class="t">용어 연결</span>
+      <b>배란</b>: 난자가 난소에서 수란관으로 배출<br>
+      <b>수정</b>: 수란관에서 정자와 난자가 결합<br>
+      <b>난할</b>: 수정란의 초기 세포 분열<br>
+      <b>착상</b>: 포배가 자궁 안쪽 벽을 파고들어 자리 잡음
+    </div>
+    <div class="callout trap"><span class="t">함정</span>
+      수정이 일어나는 곳은 자궁이 아니라 <b>수란관</b>! 자궁은 <b>착상</b>하여 태아가 자라는 곳이에요.
+    </div>
+  </div>
+</section>
+
+<section class="block" id="cleavage">
+  <h2><span class="num">4</span>난할 시뮬레이터</h2>
+  <p>난할은 수정란의 초기 세포 분열이에요. 체세포 분열의 한 종류지만, <b>세포가 자랄 틈 없이</b> 빠르게 분열을 반복해요.</p>
+  <div class="card">
+    <div class="grid-2">
+      <div class="center">
+        <svg viewBox="0 0 260 260" id="clv" style="max-width:300px" aria-label="난할이 진행되는 배아"></svg>
+        <div class="row" style="justify-content:center">
+          <button class="btn primary" id="clv-go">✂️ 분열하기</button>
+          <button class="btn" id="clv-reset">처음으로</button>
+        </div>
+      </div>
+      <div>
+        <div class="grid-2" style="gap:10px">
+          <div class="stat"><div class="lbl">세포 수</div><div class="big-num" id="c-n">1</div><div class="small ok" style="color:var(--ok)">↑ 늘어남</div></div>
+          <div class="stat"><div class="lbl">세포 1개의 크기</div><div class="big-num" id="c-s">1</div><div class="small" style="color:var(--bad)">↓ 작아짐</div></div>
+          <div class="stat"><div class="lbl">세포 1개당 염색체 수</div><div class="big-num">46</div><div class="small muted">→ 변화 없음</div></div>
+          <div class="stat"><div class="lbl">배아 전체 크기</div><div class="big-num">≈</div><div class="small muted">→ 거의 변화 없음</div></div>
+        </div>
+        <p class="small" id="c-msg" style="margin-top:10px"></p>
+      </div>
+    </div>
+  </div>
+  <div class="callout analogy"><span class="t">비유: 피자 자르기 🍕</span>
+    피자 한 판을 계속 자르면 조각 수(세포 수)는 늘지만, 한 조각 크기(세포 크기)는 점점 작아지죠. 피자 전체 크기(배아 크기)는 그대로예요! 단, 조각마다 토핑(염색체 46개)은 그대로 다 있어요.
+  </div>
+</section>
+
+<section class="block" id="growth">
+  <h2><span class="num">5</span>착상 후 출산까지</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="tl">
+        <div><b class="when">수정 직후</b> — 수란관에서 수정란 탄생, 난할 시작</div>
+        <div><b class="when">약 1주 후</b> — 포배가 자궁 안쪽 벽에 <b>착상</b> (임신)</div>
+        <div><b class="when">약 3~4주</b> — 심장이 뛰기 시작 <span class="xtag"></span></div>
+        <div><b class="when">약 8주 후</b> — 여러 기관이 만들어져 사람의 모습을 갖춘 <b>태아</b>가 됨 (그 전은 배아)</div>
+        <div><b class="when">약 266일(38주) 후</b> — 출산</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>태반 — 엄마와 태아 사이의 물질 교환소</h3>
+      <svg viewBox="0 0 320 170" aria-label="태반에서의 물질 교환">
+        <rect x="10" y="20" width="120" height="130" rx="14" fill="#fecaca"/>
+        <rect x="190" y="20" width="120" height="130" rx="14" fill="#bfdbfe"/>
+        <text x="70" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="#991b1b">모체의 혈액</text>
+        <text x="250" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="#1e3a8a">태아의 혈액</text>
+        <line x1="160" y1="20" x2="160" y2="150" stroke="currentColor" stroke-dasharray="4 4" opacity=".5"/>
+        <text x="160" y="165" text-anchor="middle" font-size="11" fill="currentColor" opacity=".7">직접 섞이지 않음</text>
+        <defs><marker id="am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+        <line x1="110" y1="80" x2="210" y2="80" stroke="#16a34a" stroke-width="3" marker-end="url(#am)" color="#16a34a"/>
+        <text x="160" y="72" text-anchor="middle" font-size="12" fill="#15803d" font-weight="700">산소, 영양소 →</text>
+        <line x1="210" y1="118" x2="110" y2="118" stroke="#b45309" stroke-width="3" marker-end="url(#am)" color="#b45309"/>
+        <text x="160" y="110" text-anchor="middle" font-size="12" fill="#b45309" font-weight="700">← 이산화 탄소, 노폐물</text>
+      </svg>
+      <p class="small">태아는 <b>탯줄</b>로 태반과 연결되어 있어요. 산소와 영양소는 <b>모체 → 태아</b>, 이산화 탄소와 노폐물은 <b>태아 → 모체</b>로 이동해요.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>📌 발생 과정 한 줄로</h3>
+    <div class="flow">
+      <span class="node">수정란</span><span class="arr">→</span>
+      <span class="node">난할<small>세포 수↑, 크기↓</small></span><span class="arr">→</span>
+      <span class="node">포배 · 착상</span><span class="arr">→</span>
+      <span class="node">체세포 분열<small>세포 수 증가</small></span><span class="arr">→</span>
+      <span class="node">조직 · 기관 형성</span><span class="arr">→</span>
+      <span class="node">개체</span>
+    </div>
+    <p style="margin-top:10px">수정란이 세포 분열을 하면서 여러 과정을 거쳐 개체가 되는 것 = <span class="hl"><b>발생</b></span></p>
+  </div>
+</section>
+
+<section class="block" id="check">
+  <h2><span class="num">6</span>확인 문제</h2>
+  <div id="quiz"></div>
+</section>
+
+<section class="block" id="sum">
+  <h2><span class="num">7</span>핵심 요약</h2>
+  <div class="summary">
+    <ol>
+      <li>수정: 정자(23) + 난자(23) → 수정란(46). 감수 분열 덕분에 염색체 수가 대대로 일정.</li>
+      <li>배란(난소→수란관) → 수정(<b>수란관</b>) → 난할 → 착상(<b>자궁</b>, 수정 후 약 1주).</li>
+      <li>난할: 세포 수 <b>증가</b>, 세포 크기 <b>감소</b>, 세포당 염색체 수 <b>그대로</b>.</li>
+      <li>수정 후 약 8주 → 태아, 약 266일 → 출산.</li>
+      <li>태반: 산소·영양소 모체→태아, 이산화 탄소·노폐물 태아→모체.</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+(function () {
+  /* ---------- 생식 기관 ---------- */
+  var organ = {
+    ovary: "<b>난소</b> — 감수 분열로 <b>난자를 만들고</b>, 여성 호르몬을 분비해요. 보통 한 달에 한 번 난자를 수란관으로 내보내요(<b>배란</b>).",
+    tube: "<b>수란관</b> — 난소에서 나온 난자가 자궁으로 이동하는 관. <b>정자와 난자가 만나 수정이 일어나는 곳</b>이에요!",
+    uterus: "<b>자궁</b> — 수정란(포배)이 <b>착상</b>하여 <b>태아가 자라는 곳</b>. 안쪽 벽이 두껍고 혈관이 많아요.",
+    vagina: "<b>질</b> — 출산할 때 아기가 나오는 통로예요."
+  };
+  document.querySelectorAll("#female .hot").forEach(function (g) {
+    g.addEventListener("click", function () {
+      document.querySelectorAll("#female .hot").forEach(function (x) { x.classList.remove("on"); });
+      g.classList.add("on");
+      document.getElementById("f-info").innerHTML = organ[g.getAttribute("data-k")];
+    });
+  });
+
+  /* ---------- 여행 지도 ---------- */
+  var J = [
+    { x: 88, y: 160, n: 1, up: true, lab: "배란", info: "<b>배란</b> — 난소에서 성숙한 난자가 수란관으로 나와요." },
+    { x: 150, y: 88, n: 1, lab: "수정", sperm: true, info: "<b>수정</b> — 수란관 윗부분에서 정자와 난자가 만나 <b>수정란(46)</b>이 돼요." },
+    { x: 240, y: 70, n: 2, lab: "2세포", info: "<b>난할 시작</b> — 수정 후 약 30시간, 첫 번째 분열로 세포 2개" },
+    { x: 330, y: 68, n: 4, lab: "4세포", info: "약 2일 — 세포 4개. 세포는 점점 작아져요." },
+    { x: 420, y: 76, n: 8, lab: "8세포", info: "약 3일 — 세포 8개" },
+    { x: 510, y: 98, n: 16, lab: "상실배", info: "약 4일 — 뽕나무 열매처럼 생긴 세포 덩어리(상실배)" },
+    { x: 585, y: 140, n: 30, lab: "포배", info: "약 5일 — 속이 빈 공 모양의 <b>포배</b>가 돼요." },
+    { x: 640, y: 200, n: 40, lab: "착상", info: "<b>착상</b> — 수정 후 약 <b>일주일</b>, 포배가 자궁 안쪽 벽을 파고들어 자리 잡아요. 이때부터 <b>임신</b>!" }
+  ];
+  function blob(cx, cy, n, R) {
+    var s = '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#fff1f2" stroke="#e11d48" stroke-width="1.5"/>';
+    if (n === 1) return s + '<circle cx="' + cx + '" cy="' + cy + '" r="' + (R * .3) + '" fill="#e11d48" opacity=".7"/>';
+    var r = R * 0.92 / Math.sqrt(n) * 0.95;
+    for (var i = 0; i < n; i++) {
+      var rr = R * 0.92 * Math.sqrt((i + 0.5) / n), th = i * 2.39996;
+      s += '<circle cx="' + (cx + rr * Math.cos(th)) + '" cy="' + (cy + rr * Math.sin(th)) + '" r="' + r + '" fill="#fda4af" stroke="#be123c" stroke-width=".7"/>';
+    }
+    return s;
+  }
+  var g = "";
+  J.forEach(function (s, i) {
+    g += '<g class="journey-stage" data-i="' + i + '" tabindex="0"><circle class="ring" cx="' + s.x + '" cy="' + s.y + '" r="24" fill="none" stroke="var(--accent)" stroke-width="3"/>' + blob(s.x, s.y, s.n, 17);
+    if (s.sperm) g += '<path d="M' + (s.x - 40) + " " + (s.y + 22) + " q 8 -6 16 -4 t 10 -8" + '" stroke="#2563eb" stroke-width="2" fill="none"/><circle cx="' + (s.x - 14) + '" cy="' + (s.y + 10) + '" r="3" fill="#2563eb"/>';
+    g += '<text x="' + (s.up ? s.x + 40 : s.x) + '" y="' + (s.up ? s.y + 4 : s.y + 38) + '" text-anchor="middle" font-size="12" fill="currentColor" font-weight="700">' + s.lab + "</text></g>";
+  });
+  document.getElementById("jstages").innerHTML = g;
+  function pick(i) {
+    document.querySelectorAll(".journey-stage").forEach(function (x, k) { x.classList.toggle("on", k === i); });
+    document.getElementById("j-info").innerHTML = (i + 1) + " / " + J.length + " · " + J[i].info;
+  }
+  document.querySelectorAll(".journey-stage").forEach(function (el) {
+    var i = Number(el.getAttribute("data-i"));
+    el.addEventListener("click", function () { pick(i); });
+    el.addEventListener("keydown", function (e) { if (e.key === "Enter") pick(i); });
+  });
+  pick(0);
+
+  /* ---------- 난할 ---------- */
+  var n = 1;
+  function drawClv() {
+    var cx = 130, cy = 130, R = 110;
+    var s = '<circle cx="' + cx + '" cy="' + cy + '" r="' + (R + 8) + '" fill="none" stroke="#fda4af" stroke-width="3" stroke-dasharray="6 4"/>';
+    if (n === 1) {
+      s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#fecdd3" stroke="#be123c" stroke-width="2"/><circle cx="' + cx + '" cy="' + cy + '" r="22" fill="#e11d48" opacity=".7"/>';
+    } else {
+      var r = R / Math.sqrt(n) * 0.93;
+      for (var i = 0; i < n; i++) {
+        var rr = (R - r) * Math.sqrt((i + 0.5) / n) * 1.02, th = i * 2.39996;
+        var x = cx + rr * Math.cos(th), y = cy + rr * Math.sin(th);
+        s += '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="#fecdd3" stroke="#be123c" stroke-width="1.2"/>';
+        if (r > 6) s += '<circle cx="' + x + '" cy="' + y + '" r="' + (r * .28) + '" fill="#e11d48" opacity=".6"/>';
+      }
+    }
+    document.getElementById("clv").innerHTML = s;
+    document.getElementById("c-n").textContent = n;
+    document.getElementById("c-s").textContent = n === 1 ? "1" : "1/" + n;
+    document.getElementById("c-msg").innerHTML = n === 1 ? "수정란 1개. <b>분열하기</b>를 눌러 보세요."
+      : n >= 64 ? "세포가 " + n + "개가 되었지만 배아 전체 크기는 처음과 거의 같아요. 곧 <b>포배</b>가 되어 착상해요!"
+      : "세포 " + n + "개. 세포 하나의 부피는 처음의 1/" + n + "로 줄었어요.";
+    document.getElementById("clv-go").disabled = n >= 64;
+  }
+  document.getElementById("clv-go").onclick = function () { n *= 2; drawClv(); };
+  document.getElementById("clv-reset").onclick = function () { n = 1; drawClv(); };
+  drawClv();
+
+  /* ---------- 문제 ---------- */
+  S2.quiz("quiz", [
+    { t: "mc", q: "정자와 난자가 만나 수정이 일어나는 장소는?", o: ["난소", "수란관", "자궁", "질", "정소"], a: 1, e: "수정은 <b>수란관</b>, 착상과 태아의 성장은 <b>자궁</b>." },
+    { t: "mc", q: "태아가 자라는 장소는?", o: ["난소", "수란관", "자궁", "부정소", "수정관"], a: 2, e: "" },
+    { t: "short", q: "정소에서 만들어진 정자가 잠시 머물면서 성숙하는 장소는?", a: ["부정소"], e: "정소 → <b>부정소</b> → 수정관 → 요도" },
+    { t: "mc", q: "난할에 대한 설명으로 옳은 것은?", tag: "문제은행 유형",
+      o: ["감수 분열의 한 종류이다.", "세포 하나의 크기가 점점 커진다.", "분열할수록 세포 1개당 염색체 수가 줄어든다.", "세포 수는 늘어나지만 세포 하나의 크기는 작아진다.", "착상 이후에 처음 시작된다."], a: 3,
+      e: "난할은 <b>체세포 분열</b>이라서 염색체 수는 그대로, 세포가 자랄 틈 없이 분열하니 크기는 작아져요. 착상 <b>전</b> 수란관에서 시작해요." },
+    { t: "mc", q: "(1) 배란 (2) 난할 (3) 착상 에 해당하는 설명을 옳게 연결한 것은?  ㉠ 수정란의 초기 세포 분열  ㉡ 난자가 난소에서 수란관으로 배출  ㉢ 포배가 자궁 안쪽 벽을 파고들어 감",
+      o: ["(1)㉠ (2)㉡ (3)㉢", "(1)㉡ (2)㉠ (3)㉢", "(1)㉡ (2)㉢ (3)㉠", "(1)㉢ (2)㉠ (3)㉡", "(1)㉢ (2)㉡ (3)㉠"], a: 1, e: "배란 ㉡, 난할 ㉠, 착상 ㉢" },
+    { t: "mc", q: "배아는 수정된 지 ( ㉠ )주 후 사람의 모습을 갖춘 태아가 되고, 태아는 수정된 지 약 ( ㉡ )일 후 출산된다.", o: ["㉠ 4, ㉡ 266", "㉠ 8, ㉡ 266", "㉠ 8, ㉡ 300", "㉠ 12, ㉡ 280", "㉠ 1, ㉡ 266"], a: 1, e: "약 <b>8주</b> 후 태아, 약 <b>266일</b>(38주) 후 출산" },
+    { t: "ox", q: "태반에서 태아의 혈액과 모체의 혈액은 직접 섞인다.", a: false, e: "직접 섞이지 않고, 물질만 교환돼요." },
+    { t: "ox", q: "수정란의 염색체 수는 체세포의 염색체 수와 같다.", a: true, e: "23 + 23 = 46" },
+    { t: "essay", q: "난할의 특징을 <b>세포 수, 세포의 크기, 세포 개당 염색체 수</b>를 모두 포함하여 서술하시오.",
+      a: "난할이 진행될수록 <b>세포 수는 늘어나지만</b>, 세포가 자라는 시기 없이 분열을 빠르게 반복하므로 <b>세포의 크기는 점점 작아진다</b>. 체세포 분열이므로 <b>세포 개당 염색체 수는 변하지 않는다</b>." },
+    { t: "essay", q: "태반에서 산소와 이산화 탄소가 이동하는 방향을 서술하시오.",
+      a: "산소는 <b>모체의 혈액에서 태아의 혈액으로</b>, 이산화 탄소는 <b>태아의 혈액에서 모체의 혈액으로</b> 이동한다." },
+    { t: "essay", q: "수정란이 개체가 될 때까지의 과정을 <b>수정란, 난할, 체세포 분열, 기관, 개체</b>를 모두 포함하여 서술하시오.",
+      a: "<b>수정란</b>은 <b>난할</b>을 거쳐 세포 수를 늘리고, 이후 <b>체세포 분열</b>로 세포 수가 늘어나면서 여러 조직과 <b>기관</b>이 형성되어 하나의 <b>개체</b>가 된다." }
+  ]);
+})();
+</script>
+</body>
+</html>

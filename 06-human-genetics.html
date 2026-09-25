@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>사람의 유전</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/common.js"></script>
+<style>
+  .trait { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 10px 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+  .trait .opt2 { display: flex; gap: 6px; }
+  .trait .opt2 button { font: inherit; font-size: .85rem; padding: 5px 10px; border-radius: 99px; border: 1px solid var(--border); background: var(--surface); color: inherit; cursor: pointer; }
+  .trait .opt2 button.on { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  .ped svg { width: 100%; height: auto; max-width: 560px; display: block; margin: 0 auto; }
+  .ped .person { cursor: pointer; }
+  .ped .person:hover rect, .ped .person:hover circle { stroke-width: 4; }
+  .xcell { display: grid; grid-template-columns: 70px repeat(2, minmax(0, 1fr)); gap: 6px; max-width: 460px; }
+  .xcell > div { border-radius: 10px; min-height: 58px; display: grid; place-items: center; text-align: center; font-size: .9rem; padding: 4px; }
+  .xcell .h { background: var(--surface-2); font-family: var(--mono); font-weight: 800; }
+  .xcell .c { border: 1px solid var(--border); background: var(--surface); }
+  .xcell .c.cb { background: var(--bad-soft); }
+  .xcell .c.car { background: var(--warn-soft); }
+</style>
+</head>
+<body class="unit-gene">
+<div class="page">
+<nav class="toc"></nav>
+<main>
+
+<div class="hero">
+  <span class="unit">Ⅴ. 생식과 유전 · 2. 유전 · 3차시</span>
+  <h1>사람의 유전을 연구하는 방법</h1>
+  <p class="lead">사람으로는 멘델처럼 교배 실험을 할 수 없어요. 그렇다면 과학자들은 어떻게 사람의 유전을 연구할까요?</p>
+  <ul class="goals">
+    <li>사람의 유전 연구가 어려운 까닭을 설명할 수 있다.</li>
+    <li>가계도를 분석하여 우열 관계와 유전자형을 알아낼 수 있다.</li>
+    <li>쌍둥이 연구로 알 수 있는 것을 설명할 수 있다.</li>
+  </ul>
+</div>
+
+<section class="block" id="me">
+  <h2><span class="num">1</span>활동: 나의 형질 조사하기</h2>
+  <p>거울을 보거나 짝과 서로 확인해 보세요. 반 친구들의 결과를 모아 보면 재미있어요!</p>
+  <div class="grid-2" id="traits"></div>
+  <p class="small muted" style="margin-top:10px">※ 교과서에서 우열 관계를 배우기 위해 흔히 쓰는 예시예요. 실제로는 여러 유전자와 환경의 영향을 함께 받는 형질도 많아요.</p>
+  <div class="callout think"><span class="t">생각해 보기</span>
+    우성 형질을 가진 사람이 반에서 항상 더 많을까요? → <b>아니에요!</b> 우성은 '잡종일 때 나타나는 형질'이라는 뜻일 뿐, 그 형질을 가진 사람이 많다는 뜻은 아니에요.
+  </div>
+</section>
+
+<section class="block" id="hard">
+  <h2><span class="num">2</span>사람의 유전 연구가 어려운 까닭</h2>
+  <div class="table-wrap"><table class="data">
+    <thead><tr><th>완두 🌱 (연구하기 좋음)</th><th>사람 🧑 (연구하기 어려움)</th></tr></thead>
+    <tbody>
+      <tr><td>한 세대가 짧다 (몇 달)</td><td>한 세대가 <b>길다</b> (약 30년)</td></tr>
+      <tr><td>자손 수가 많다</td><td>자손 수가 <b>적다</b></td></tr>
+      <tr><td>마음대로 교배할 수 있다</td><td>자유로운 <b>교배 실험이 불가능</b>하다</td></tr>
+      <tr><td>대립 형질이 뚜렷하다</td><td>대립 형질이 <b>복잡</b>하고 <b>환경의 영향</b>을 많이 받는다</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout analogy"><span class="t">외우는 법</span>멘델 완두의 장점(기·세·자·대)과 <b>정반대</b>라고 기억하세요!</div>
+</section>
+
+<section class="block" id="ped">
+  <h2><span class="num">3</span>가계도 조사</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>가계도 기호 읽기</h3>
+      <svg viewBox="0 0 300 150" aria-label="가계도 기호">
+        <rect x="20" y="15" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <text x="62" y="35" font-size="13" fill="currentColor">남자</text>
+        <circle cx="34" cy="80" r="14" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <text x="62" y="85" font-size="13" fill="currentColor">여자</text>
+        <rect x="150" y="15" width="28" height="28" fill="#7c3aed"/>
+        <circle cx="200" cy="29" r="14" fill="#7c3aed"/>
+        <text x="222" y="35" font-size="13" fill="currentColor">형질이 나타난 사람</text>
+        <line x1="150" y1="80" x2="210" y2="80" stroke="currentColor" stroke-width="2.5"/>
+        <text x="222" y="85" font-size="13" fill="currentColor">부부 (결혼)</text>
+        <line x1="180" y1="100" x2="180" y2="135" stroke="currentColor" stroke-width="2.5"/>
+        <text x="200" y="125" font-size="13" fill="currentColor">자녀</text>
+      </svg>
+      <p>가계도 조사로 알 수 있는 것: 형질의 <b>우열 관계</b>, 가족 구성원의 <b>유전자형</b>, 앞으로 태어날 자손의 형질 <b>예측</b></p>
+    </div>
+    <div class="card">
+      <h3>🔍 열성 찾는 비법</h3>
+      <p style="font-size:1.08rem"><b>부모가 같은 형질</b>인데 부모와 <b>다른 형질의 자녀</b>가 태어났다면 → <span class="hl"><b>자녀의 형질이 열성!</b></span></p>
+      <p>그리고 그 부모는 <b>둘 다 잡종(Aa)</b>이에요. 부모 모두 열성 유전자를 숨기고 있다가 자녀에게 하나씩 물려준 거예요.</p>
+      <div class="callout trap"><span class="t">함정</span>부모와 다른 형질이 나왔다고 무조건 열성은 아니에요. <b>부모 둘이 같은 형질</b>이어야 해요!</div>
+    </div>
+  </div>
+
+  <div class="card ped">
+    <h3>예제 가계도 ① 귀지 유형 <span class="small muted">— 사람을 눌러 유전자형을 확인하세요</span></h3>
+    <div id="ped1"></div>
+    <div class="stat" id="ped1-info">A: 젖은 귀지 유전자, a: 마른 귀지 유전자. 먼저 우열 관계를 찾아보세요.</div>
+  </div>
+
+  <div class="card ped">
+    <h3>도전 가계도 ② 귓불 모양 <span class="small muted">— A: 분리형(우성), a: 부착형(열성)</span></h3>
+    <div id="ped2"></div>
+    <div class="stat" id="ped2-info">각 사람을 누르기 전에 유전자형을 먼저 추리해 보세요.</div>
+    <div class="grid-2" style="margin-top:12px">
+      <div>
+        <p><b>Q.</b> 3과 5 사이에서 셋째 아이가 태어날 때, 부착형 귓불일 확률은?</p>
+        <button class="btn" data-reveal="p2a">정답 보기</button>
+        <div class="answer" id="p2a">3과 5는 모두 <b>Aa</b> (둘 다 부착형 자녀 6이 있으므로). Aa × Aa → aa일 확률 = <b>1/4 (25%)</b></div>
+      </div>
+      <div>
+        <p><b>Q.</b> 유전자형을 확실히 알 수 <u>없는</u> 사람은?</p>
+        <button class="btn" data-reveal="p2b">정답 보기</button>
+        <div class="answer" id="p2b"><b>7</b>. 분리형이라 A는 있지만, 부모가 Aa × Aa이므로 AA(1/3) 또는 Aa(2/3)일 수 있어요.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="twin">
+  <h2><span class="num">4</span>쌍둥이 연구</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>1란성 쌍둥이</h3>
+      <svg viewBox="0 0 260 90" aria-label="1란성 쌍둥이"><circle cx="30" cy="45" r="18" fill="#fda4af"/><text x="30" y="80" font-size="11" text-anchor="middle" fill="currentColor">수정란 1개</text><path d="M55 45 H95" stroke="currentColor"/><circle cx="120" cy="45" r="14" fill="#fda4af"/><circle cx="140" cy="45" r="14" fill="#fda4af"/><text x="130" y="80" font-size="11" text-anchor="middle" fill="currentColor">둘로 나뉨</text><path d="M165 45 H195" stroke="currentColor"/><text x="230" y="50" font-size="22" text-anchor="middle">👦👦</text></svg>
+      <ul class="small">
+        <li>수정란 <b>1개</b>가 발생 초기에 둘로 나뉘어 각각 자람</li>
+        <li><b>유전자 구성이 서로 같다</b> → 성별, 혈액형이 항상 같음</li>
+        <li>차이가 난다면 → <b>환경</b>의 영향</li>
+      </ul>
+    </div>
+    <div class="card extra">
+      <h3>2란성 쌍둥이</h3>
+      <svg viewBox="0 0 260 90" aria-label="2란성 쌍둥이"><circle cx="22" cy="45" r="14" fill="#fda4af"/><circle cx="52" cy="45" r="14" fill="#c4b5fd"/><text x="37" y="80" font-size="11" text-anchor="middle" fill="currentColor">수정란 2개</text><path d="M75 45 H115" stroke="currentColor"/><text x="170" y="50" font-size="22" text-anchor="middle">👦👧</text></svg>
+      <ul class="small">
+        <li>난자 2개가 각각 다른 정자와 수정</li>
+        <li>유전자 구성이 <b>서로 다름</b> (보통의 형제자매와 비슷)</li>
+        <li>성별이 다를 수도 있음</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <h3>쌍둥이 연구로 알 수 있는 것</h3>
+    <p>1란성 쌍둥이를 <b>같은 환경</b>에서 자란 경우와 <b>다른 환경</b>에서 자란 경우로 나누어 특정 형질을 비교하면, 그 형질이 <b>유전과 환경 중 어느 쪽의 영향을 더 크게 받는지</b> 알 수 있어요.</p>
+    <p class="small muted"><span class="xtag"></span>아래 표는 이해를 돕기 위한 가상 예시예요.</p>
+    <div class="table-wrap"><table class="data center-all">
+      <thead><tr><th>형질 (가상 예시 자료)</th><th>같은 환경에서 자란 1란성</th><th>다른 환경에서 자란 1란성</th><th>해석</th></tr></thead>
+      <tbody>
+        <tr><td>혈액형 일치율</td><td>100%</td><td>100%</td><td>환경과 관계없음 → <b>유전</b></td></tr>
+        <tr><td>키 비슷한 정도</td><td>매우 높음</td><td>높음</td><td>유전 영향이 큼</td></tr>
+        <tr><td>몸무게 비슷한 정도</td><td>높음</td><td>낮아짐</td><td><b>환경</b>(식습관 등) 영향도 큼</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small muted">환경이 달라져도 일치율이 높게 유지되면 유전의 영향이 크고, 환경이 달라지면 일치율이 크게 낮아지는 형질은 환경의 영향이 커요.</p>
+  </div>
+</section>
+
+<section class="block" id="modern">
+  <h2><span class="num">5</span>최근의 연구 방법</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>🔬 염색체 분석</h3>
+      <p>세포의 염색체를 크기와 모양대로 배열(핵형 분석)하여 <b>염색체의 수와 모양</b>에 이상이 있는지 확인해요.</p>
+      <p class="small"><span class="xtag"></span>예) 다운 증후군: 21번 염색체가 <b>3개</b> → 총 47개</p>
+    </div>
+    <div class="card">
+      <h3>🧬 DNA 분석</h3>
+      <p><b>DNA를 비교·분석</b>하여 특정 유전병의 원인 유전자를 찾거나, 유전병이 나타날 가능성을 예측해요.</p>
+      <p class="small"><span class="xtag"></span>예) 유전자 검사, 친자 확인, 맞춤형 치료 연구</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="xlink">
+  <h2><span class="num">6</span>심화: 적록 색맹 (성염색체에 있는 유전자)</h2>
+  <details class="adv"><summary>🎓 고등 과정 심화: 적록 색맹과 반성유전 <small>(문제은행에 나오지만 교과서 밖 · 펼쳐 보기)</small></summary>
+  <div class="callout teacher"><span class="t">교사용 안내</span>현재 교과서 본문 범위 밖이지만 문제은행(과학_5-2)에 적록 색맹·반성유전 문항이 있어 심화로 넣었어요. 필요할 때만 다뤄 주세요.</div>
+  <div class="grid-2">
+    <div class="card">
+      <ul>
+        <li>적록 색맹 유전자는 <b>X 염색체</b>에 있고, 정상에 대해 <b>열성</b>이에요. (X' = 색맹 유전자)</li>
+        <li>남자(XY)는 X가 1개뿐이라 X'를 하나만 받아도 색맹 → <b>남자에게 더 많이</b> 나타나요.</li>
+        <li>여자는 X'X'일 때만 색맹, XX'는 정상이지만 유전자를 가진 <b>보인자</b>.</li>
+        <li><span class="xtag"></span>우리나라 남자 약 6%, 여자 약 0.4%가 적록 색각 이상이에요.</li>
+      </ul>
+      <div class="callout exam"><span class="t">규칙 2개</span>
+        ① <b>어머니가 색맹</b>이면 <b>아들은 모두 색맹</b> (아들의 X는 어머니에게서)<br>
+        ② <b>아버지가 색맹</b>이면 <b>딸은 반드시 색맹 유전자를 가짐</b> (딸은 아버지 X를 받음)
+      </div>
+    </div>
+    <div class="card">
+      <div class="row" style="margin-bottom:10px">
+        <label class="field">아버지<select id="xf"><option value="X">정상 (XY)</option><option value="X'">색맹 (X'Y)</option></select></label>
+        <label class="field">어머니<select id="xm"><option value="XX">정상 (XX)</option><option value="XX'" selected>보인자 (XX')</option><option value="X'X'">색맹 (X'X')</option></select></label>
+      </div>
+      <div class="xcell" id="xgrid"></div>
+      <p class="small" id="xmsg" style="margin-top:8px"></p>
+    </div>
+  </div>
+</details>
+</section>
+
+<section class="block" id="check">
+  <h2><span class="num">7</span>확인 문제</h2>
+  <div id="quiz"></div>
+</section>
+
+<section class="block" id="sum">
+  <h2><span class="num">8</span>핵심 요약</h2>
+  <div class="summary">
+    <ol>
+      <li>사람 유전 연구가 어려운 까닭: 한 세대가 길다, 자손 수가 적다, 교배 실험 불가능, 형질이 복잡하고 환경 영향이 크다.</li>
+      <li><b>가계도 조사</b>: 우열 관계, 유전자형, 자손의 형질 예측. 같은 형질의 부모에게서 다른 형질의 자녀 → 자녀 형질이 <b>열성</b>.</li>
+      <li><b>쌍둥이 연구</b>: 1란성 쌍둥이 비교 → 유전과 환경의 영향 비교.</li>
+      <li><b>최근 방법</b>: 염색체 수·모양 분석, DNA 비교·분석.</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+(function () {
+  /* ---------- 형질 조사 ---------- */
+  var T = [
+    ["👅 혀 말기", "할 수 있다", "못 한다", 0],
+    ["👂 귓불 모양", "분리형(떨어짐)", "부착형(붙음)", 0],
+    ["😊 보조개", "있다", "없다", 0],
+    ["👁 눈꺼풀", "쌍꺼풀", "외꺼풀", 0],
+    ["🙆 이마선", "V자형", "일자형", 0],
+    ["👍 엄지 모양", "곧은 엄지", "뒤로 많이 젖혀짐", 0]
+  ];
+  var box = document.getElementById("traits");
+  T.forEach(function (t, i) {
+    var d = document.createElement("div");
+    d.className = "trait";
+    d.innerHTML = "<div><b>" + t[0] + '</b><div class="small muted">우성: ' + t[1] + " / 열성: " + t[2] + '</div></div><div class="opt2"><button>' + t[1] + "</button><button>" + t[2] + "</button></div>";
+    var bs = d.querySelectorAll("button");
+    bs.forEach(function (b, k) {
+      b.onclick = function () {
+        bs.forEach(function (x) { x.classList.remove("on"); });
+        b.classList.add("on");
+        S2.store.set("s2-trait-" + i, String(k));
+      };
+    });
+    var saved = S2.store.get("s2-trait-" + i);
+    if (saved !== null && bs[Number(saved)]) bs[Number(saved)].classList.add("on");
+    box.appendChild(d);
+  });
+
+  /* ---------- 가계도 ---------- */
+  function drawPed(id, people, lines, w, h, infoId) {
+    var s = '<svg viewBox="0 0 ' + w + " " + h + '">';
+    lines.forEach(function (l) { s += '<path d="' + l + '" stroke="currentColor" stroke-width="2.5" fill="none"/>'; });
+    people.forEach(function (p, i) {
+      var fill = p.aff ? "#7c3aed" : "var(--surface)";
+      s += '<g class="person" data-i="' + i + '" tabindex="0">';
+      s += p.m ? '<rect x="' + (p.x - 20) + '" y="' + (p.y - 20) + '" width="40" height="40" fill="' + fill + '" stroke="currentColor" stroke-width="2.5"/>'
+               : '<circle cx="' + p.x + '" cy="' + p.y + '" r="21" fill="' + fill + '" stroke="currentColor" stroke-width="2.5"/>';
+      s += '<text x="' + p.x + '" y="' + (p.y + 5) + '" text-anchor="middle" font-size="14" font-weight="800" fill="' + (p.aff ? "#fff" : "currentColor") + '">' + p.n + "</text>";
+      s += '<text class="gt" x="' + p.x + '" y="' + (p.y + 42) + '" text-anchor="middle" font-size="14" font-weight="800" fill="var(--accent-ink)" font-family="monospace"></text>';
+      s += "</g>";
+    });
+    s += "</svg>";
+    var el = document.getElementById(id);
+    el.innerHTML = s;
+    el.querySelectorAll(".person").forEach(function (g) {
+      var p = people[Number(g.getAttribute("data-i"))];
+      var show = function () {
+        g.querySelector(".gt").textContent = p.g;
+        document.getElementById(infoId).innerHTML = "<b>" + p.n + "번 (" + p.t + ")</b> → <b class='mono'>" + p.g + "</b> : " + p.why;
+      };
+      g.addEventListener("click", show);
+      g.addEventListener("keydown", function (e) { if (e.key === "Enter") show(); });
+    });
+  }
+  drawPed("ped1", [
+    { n: 1, m: true, x: 200, y: 50, aff: false, g: "Aa", t: "젖은 귀지", why: "젖은 귀지인데 마른 귀지(aa) 자녀가 있으므로 a를 하나 가지고 있어요." },
+    { n: 2, m: false, x: 340, y: 50, aff: false, g: "Aa", t: "젖은 귀지", why: "1번과 마찬가지로 자녀 3에게 a를 물려주었어요." },
+    { n: 3, m: true, x: 200, y: 180, aff: true, g: "aa", t: "마른 귀지", why: "젖은 귀지 부모에게서 태어난 마른 귀지 → <b>마른 귀지가 열성</b>! 열성은 순종(aa)일 때만 나타나요." },
+    { n: 4, m: false, x: 340, y: 180, aff: false, g: "AA 또는 Aa", t: "젖은 귀지", why: "Aa × Aa의 자녀 중 젖은 귀지 → AA(1/3) 또는 Aa(2/3). 확실히 알 수 없어요." }
+  ], ["M220 50 H319", "M270 50 V120 H200 V160 M270 120 H340 V159"], 540, 240, "ped1-info");
+
+  drawPed("ped2", [
+    { n: 1, m: true, x: 110, y: 45, aff: false, g: "Aa", t: "분리형", why: "부착형(aa) 아들 4가 있으므로 a를 가지고 있어요." },
+    { n: 2, m: false, x: 250, y: 45, aff: true, g: "aa", t: "부착형", why: "부착형은 열성 → 반드시 aa" },
+    { n: 3, m: false, x: 200, y: 165, aff: false, g: "Aa", t: "분리형", why: "어머니(2)가 aa라서 a를 반드시 받았어요." },
+    { n: 4, m: true, x: 60, y: 165, aff: true, g: "aa", t: "부착형", why: "열성 형질 → aa" },
+    { n: 5, m: true, x: 340, y: 165, aff: false, g: "Aa", t: "분리형", why: "부착형(aa) 자녀 6이 있으므로 a를 가지고 있어요." },
+    { n: 6, m: true, x: 220, y: 285, aff: true, g: "aa", t: "부착형", why: "열성 형질 → aa. 부모 3, 5에게서 a를 하나씩 받았어요." },
+    { n: 7, m: false, x: 340, y: 285, aff: false, g: "AA 또는 Aa", t: "분리형", why: "Aa × Aa의 자녀 중 분리형 → 확실히 알 수 없어요." }
+  ], ["M130 45 H229", "M180 45 V110 M60 110 H200 M60 110 V145 M200 110 V144", "M221 165 H320", "M270 165 V230 M220 230 H340 M220 230 V265 M340 230 V264"], 420, 340, "ped2-info");
+
+  /* ---------- 적록 색맹 ---------- */
+  function xl() {
+    var fx = document.getElementById("xf").value, m = document.getElementById("xm").value;
+    var mg = m === "XX" ? ["X", "X"] : m === "XX'" ? ["X", "X'"] : ["X'", "X'"];
+    var fg = [fx, "Y"];
+    var h = '<div class="h"></div>' + fg.map(function (g) { return '<div class="h">' + g + (g === "Y" ? " (아빠)" : " (아빠)") + "</div>"; }).join("");
+    var count = { son: [0, 0], dau: [0, 0, 0] };
+    mg.forEach(function (a) {
+      h += '<div class="h">' + a + " (엄마)</div>";
+      fg.forEach(function (b) {
+        var cls = "c", txt;
+        if (b === "Y") {
+          var cb = a === "X'";
+          txt = a + "Y<br><small>" + (cb ? "색맹 아들" : "정상 아들") + "</small>";
+          if (cb) cls += " cb";
+        } else {
+          var n = (a === "X'" ? 1 : 0) + (b === "X'" ? 1 : 0);
+          var gg = n === 2 ? "X'X'" : n === 1 ? "XX'" : "XX";
+          txt = gg + "<br><small>" + (n === 2 ? "색맹 딸" : n === 1 ? "보인자 딸(정상)" : "정상 딸") + "</small>";
+          cls += n === 2 ? " cb" : n === 1 ? " car" : "";
+        }
+        h += '<div class="' + cls + '">' + txt + "</div>";
+      });
+    });
+    document.getElementById("xgrid").innerHTML = h;
+    var msg = "";
+    if (m === "X'X'") msg = "어머니가 색맹 → <b>아들은 모두 색맹</b>이에요.";
+    else if (fx === "X'" && m === "XX") msg = "아버지가 색맹 → 딸은 모두 <b>보인자</b>, 아들은 모두 정상이에요.";
+    else if (m === "XX'") msg = "보인자 어머니 → 아들이 색맹일 확률 <b>1/2</b>.";
+    else msg = "부모 모두 정상 유전자만 있으면 자녀는 모두 정상이에요.";
+    document.getElementById("xmsg").innerHTML = msg;
+  }
+  document.getElementById("xf").onchange = xl;
+  document.getElementById("xm").onchange = xl;
+  xl();
+
+  /* ---------- 문제 ---------- */
+  S2.quiz("quiz", [
+    { t: "mc", q: "사람의 유전 현상을 연구하기 어려운 까닭이 <u>아닌</u> 것은?", o: ["한 세대가 길다.", "자손의 수가 적다.", "교배 실험이 불가능하다.", "환경의 영향을 많이 받는다.", "대립 형질이 뚜렷하게 구분된다."], a: 4, e: "사람은 대립 형질이 <b>복잡</b>해요. ⑤는 완두의 장점!" },
+    { t: "mc", q: "젖은 귀지를 가진 부모 사이에서 마른 귀지를 가진 자녀가 태어났다. 옳은 것은?", o: ["젖은 귀지가 열성이다.", "마른 귀지가 열성이다.", "부모는 모두 순종이다.", "자녀는 잡종이다.", "귀지 유형은 환경에 의해서만 결정된다."], a: 1, e: "같은 형질의 부모 → 다른 형질의 자녀 = 자녀 형질이 열성, 부모는 모두 잡종." },
+    { t: "mc", q: "1란성 쌍둥이에 대한 설명으로 옳지 <u>않은</u> 것은?", o: ["하나의 수정란이 나뉘어 발생한다.", "유전자 구성이 서로 같다.", "혈액형이 항상 같다.", "성별이 다르게 나타나기도 한다.", "쌍둥이 간의 형질 차이는 환경의 영향으로 나타난다."], a: 3, e: "1란성 쌍둥이는 유전자가 같아 성별이 <b>항상 같아요</b>. 성별이 다를 수 있는 건 2란성." },
+    { t: "short", q: "특정 형질이 유전과 환경 중 어느 쪽의 영향을 더 많이 받는지 알아보기에 가장 알맞은 연구 방법은?", a: ["쌍둥이 연구", "쌍둥이연구", "쌍둥이"], e: "" },
+    { t: "mc", q: "분리형 귓불(A)이 부착형(a)에 대해 우성이다. 부모가 모두 Aa일 때 자녀가 부착형일 확률은?", o: ["0%", "25%", "50%", "75%", "100%"], a: 1, e: "Aa × Aa → aa = 1/4" },
+    { t: "ox", q: "가계도 조사로 특정 형질의 우열 관계와 가족 구성원의 유전자형을 알 수 있다.", a: true, e: "" },
+    { t: "ox", q: "최근에는 염색체의 수와 모양을 분석하거나 DNA를 비교·분석하여 사람의 유전을 연구한다.", a: true, e: "" },
+    { t: "mc", q: "[심화] 정상인 아버지와 적록 색맹인 어머니 사이에서 태어날 수 있는 자녀는?", tag: "심화", o: ["정상인 아들", "적록 색맹인 딸", "적록 색맹 유전자가 없는 딸", "적록 색맹인 아들", "보인자인 아들"], a: 3, e: "어머니(X'X')는 모든 자녀에게 X'를 줘요. 아들 X'Y = 색맹, 딸 XX' = 보인자(정상)." }
+  ]);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>멘델과 분리의 법칙</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/common.js"></script>
+<style>
+  .punnett { display: grid; grid-template-columns: 60px repeat(2, minmax(0, 1fr)); gap: 6px; max-width: 420px; margin: 0 auto; }
+  .punnett > div { border-radius: 12px; display: grid; place-items: center; min-height: 64px; text-align: center; font-weight: 800; }
+  .punnett .h { background: var(--surface-2); font-family: var(--mono); font-size: 1.2rem; }
+  .punnett .cell { background: var(--surface); border: 1px solid var(--border); font-family: var(--mono); font-size: 1.15rem; gap: 2px; padding: 6px; }
+  .punnett .cell small { font-family: var(--font); font-weight: 400; font-size: .78rem; color: var(--muted); }
+  .pea { display: inline-block; width: 22px; height: 22px; border-radius: 50%; border: 2px solid rgba(0,0,0,.25); vertical-align: middle; }
+  .pea.Y { background: radial-gradient(circle at 35% 35%, #fef08a, #eab308); }
+  .pea.g { background: radial-gradient(circle at 35% 35%, #d9f99d, #65a30d); }
+  .dots { display: flex; flex-wrap: wrap; gap: 3px; align-content: flex-start; }
+  .dots i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+  .gen-flow { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .gen-flow .lv { display: grid; grid-template-columns: 90px 1fr; gap: 10px; align-items: center; background: var(--surface-2); border-radius: 12px; padding: 10px 12px; }
+  .gen-flow .lv b.l { color: var(--accent-ink); }
+</style>
+</head>
+<body class="unit-gene">
+<div class="page">
+<nav class="toc"></nav>
+<main>
+
+<div class="hero">
+  <span class="unit">Ⅴ. 생식과 유전 · 2. 유전 · 1차시</span>
+  <h1>멘델이 밝힌 유전 원리 ① — 분리의 법칙</h1>
+  <p class="lead">"부모의 특징은 물감처럼 섞여서 전해질까?" 150여 년 전, 한 수도사가 완두로 이 질문에 답했어요.</p>
+  <ul class="goals">
+    <li>형질, 대립 형질, 순종, 잡종, 우성, 열성 등 유전 용어를 설명할 수 있다.</li>
+    <li>한 가지 형질의 유전 결과를 퍼넷 사각형으로 설명할 수 있다.</li>
+    <li>분리의 법칙을 설명하고, 자손의 비를 계산할 수 있다.</li>
+  </ul>
+</div>
+
+<section class="block" id="mendel">
+  <h2><span class="num">1</span>멘델은 누구일까?</h2>
+  <div class="grid-2">
+    <div class="card extra">
+      <h3>🧑‍🌾 그레고어 멘델 (1822~1884)</h3>
+      <ul>
+        <li>오스트리아(현재 체코 브르노)의 수도원 수도사</li>
+        <li>수도원 정원에서 약 <b>8년 동안</b>(1856~1863) 수만 그루의 완두를 교배</li>
+        <li>1865년 결과 발표 → 당시에는 주목받지 못함</li>
+        <li><b>1900년</b> 세 명의 과학자가 각각 재발견 → "유전학의 아버지"</li>
+      </ul>
+      <p class="small muted">멘델이 성공한 비결: 실험 결과를 <b>숫자로 세고 비율(통계)</b>로 분석했다는 점!</p>
+    </div>
+    <div class="card">
+      <h3>🌱 왜 하필 완두였을까? <span class="chip acc">기·세·자·대</span></h3>
+      <div class="grid-2" style="gap:10px">
+        <div class="stat"><b>기</b>르기 쉽다</div>
+        <div class="stat">한 <b>세</b>대가 짧다</div>
+        <div class="stat"><b>자</b>손의 수가 많다</div>
+        <div class="stat"><b>대</b>립 형질이 뚜렷하다</div>
+      </div>
+      <p class="small" style="margin-top:10px">+ 자가 수분과 타가 수분(인공 수분)을 조절하기 쉬워서 원하는 대로 교배할 수 있어요.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="terms">
+  <h2><span class="num">2</span>유전 용어 카드 <span class="small muted" style="font-weight:400">— 카드를 눌러 뒤집어 보세요</span></h2>
+  <div class="grid-4">
+    <div class="flip"><div class="in"><div class="f">형질<small>trait</small></div><div class="b">생물이 지닌 여러 가지 특성<br>예) 씨의 색깔, 씨의 모양</div></div></div>
+    <div class="flip"><div class="in"><div class="f">대립 형질</div><div class="b">한 형질에서 뚜렷하게 구분되는 것<br>예) 노란색 ↔ 초록색</div></div></div>
+    <div class="flip"><div class="in"><div class="f">유전자형</div><div class="b">유전자 구성을 기호로 나타낸 것<br>예) YY, Yy, yy</div></div></div>
+    <div class="flip"><div class="in"><div class="f">표현형</div><div class="b">겉으로 드러나는 형질<br>예) 노란색, 초록색</div></div></div>
+    <div class="flip"><div class="in"><div class="f">순종</div><div class="b">한 형질을 나타내는 유전자 구성이 <b>같은</b> 개체<br>예) YY, yy</div></div></div>
+    <div class="flip"><div class="in"><div class="f">잡종</div><div class="b">한 형질을 나타내는 유전자 구성이 <b>다른</b> 개체<br>예) Yy</div></div></div>
+    <div class="flip"><div class="in"><div class="f">우성</div><div class="b">대립 형질을 가진 순종끼리 교배할 때 자손 1대에 <b>나타나는</b> 형질 (대문자)</div></div></div>
+    <div class="flip"><div class="in"><div class="f">열성</div><div class="b">자손 1대에서 <b>나타나지 않는</b> 형질 (소문자)</div></div></div>
+    <div class="flip"><div class="in"><div class="f">자가 수분</div><div class="b">한 그루 또는 한 꽃 안에서 꽃가루받이가 일어나는 것</div></div></div>
+    <div class="flip"><div class="in"><div class="f">타가 수분</div><div class="b">다른 그루의 꽃가루가 암술에 붙는 것 (인공 수분으로 교배)</div></div></div>
+    <div class="flip"><div class="in"><div class="f">대립유전자</div><div class="b">상동 염색체의 같은 위치에서 대립 형질을 결정하는 유전자<br>예) Y와 y</div></div></div>
+    <div class="flip"><div class="in"><div class="f">유전</div><div class="b">부모의 형질이 자손에게 전달되는 현상</div></div></div>
+  </div>
+  <div class="callout trap"><span class="t">함정</span>
+    '우성 = 좋은 형질, 열성 = 나쁜 형질'이 <b>아니에요!</b> 우성은 단지 잡종일 때 <b>겉으로 드러나는</b> 형질이라는 뜻이에요. 또 우성이라고 해서 개체 수가 더 많은 것도 아니에요.
+  </div>
+</section>
+
+<section class="block" id="data">
+  <h2><span class="num">3</span>멘델의 실제 실험 결과</h2>
+  <p><span class="xtag"></span> 멘델이 조사한 완두의 7가지 대립 형질과 <b>자손 2대</b>에서 센 개수예요. 시험에는 "약 3 : 1"만 알면 돼요. 모두 약 <b>3 : 1</b>이 나왔어요!</p>
+  <div class="table-wrap"><table class="data">
+    <thead><tr><th>형질</th><th>우성</th><th>열성</th><th class="num">우성 개수</th><th class="num">열성 개수</th><th class="num">비</th></tr></thead>
+    <tbody id="m7"></tbody>
+  </table></div>
+  <p class="small muted">출처: 멘델의 1865년 논문 「식물 잡종에 관한 실험」에 실린 자손 2대 집계</p>
+</section>
+
+<section class="block" id="exp">
+  <h2><span class="num">4</span>한 가지 형질의 유전 — 씨 색깔</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="gen-flow">
+        <div class="lv"><b class="l">어버이</b><div><span class="pea Y"></span> 순종 노란색 <b class="mono">YY</b> &nbsp;×&nbsp; <span class="pea g"></span> 순종 초록색 <b class="mono">yy</b></div></div>
+        <div class="lv"><b class="l">생식세포</b><div><b class="mono">Y</b> 만 &nbsp;&nbsp;/&nbsp;&nbsp; <b class="mono">y</b> 만</div></div>
+        <div class="lv"><b class="l">자손 1대</b><div><span class="pea Y"></span><span class="pea Y"></span><span class="pea Y"></span><span class="pea Y"></span> 모두 <b class="mono">Yy</b> → 모두 <b>노란색</b></div></div>
+        <div class="lv"><b class="l">자가 수분</b><div><b class="mono">Yy × Yy</b></div></div>
+        <div class="lv"><b class="l">자손 2대</b><div><span class="pea Y"></span><span class="pea Y"></span><span class="pea Y"></span><span class="pea g"></span> 노란색 : 초록색 = <b>3 : 1</b></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>멘델의 가설 (1865)</h3>
+      <ol>
+        <li>한 가지 형질을 결정하는 <b>한 쌍의 유전 인자</b>가 있고, 부모에서 자손으로 전달된다.</li>
+        <li>한 쌍의 유전 인자가 서로 다르면 <b>하나만 형질로 표현</b>되고(우성), 나머지는 표현되지 않는다(열성).</li>
+        <li>한 쌍의 유전 인자는 생식세포를 만들 때 <b>나뉘어 각 생식세포로 들어가고</b>, 수정될 때 다시 쌍을 이룬다.</li>
+      </ol>
+      <p class="small muted">멘델이 말한 '유전 인자'가 오늘날의 <b>유전자</b>예요. 멘델은 염색체나 DNA의 존재를 몰랐지만 유전 원리를 정확히 예측했어요.</p>
+    </div>
+  </div>
+  <div class="callout analogy"><span class="t">순종 노란색 완두는 어떻게 얻었을까?</span>
+    노란색 완두를 심어 <b>자가 수분</b> → 노란색만 골라 다시 심기 → 이 과정을 <b>여러 세대 반복</b>해서 계속 노란색만 나오면 순종!
+  </div>
+</section>
+
+<section class="block" id="punnett">
+  <h2><span class="num">5</span>퍼넷 사각형 만들기</h2>
+  <p>부모의 유전자형을 골라 보세요. 각 부모가 만드는 생식세포를 가로·세로에 쓰고, 만나는 칸을 채우면 자손의 유전자형이 나와요.</p>
+  <div class="card">
+    <div class="row" style="justify-content:center;margin-bottom:14px">
+      <label class="field">어버이 ① (♀)
+        <select id="p1"><option>YY</option><option selected>Yy</option><option>yy</option></select>
+      </label>
+      <b style="font-size:1.4rem">×</b>
+      <label class="field">어버이 ② (♂)
+        <select id="p2"><option>YY</option><option selected>Yy</option><option>yy</option></select>
+      </label>
+    </div>
+    <div class="grid-2">
+      <div class="punnett" id="pg"></div>
+      <div>
+        <div class="stat" style="margin-bottom:10px"><div class="lbl">유전자형의 비</div><div class="big-num" style="font-size:1.4rem" id="pr-g"></div></div>
+        <div class="stat" style="margin-bottom:10px"><div class="lbl">표현형의 비</div><div class="big-num" style="font-size:1.4rem" id="pr-p"></div></div>
+        <p class="small" id="pr-msg"></p>
+      </div>
+    </div>
+  </div>
+  <div class="callout exam"><span class="t">분리의 법칙</span>
+    쌍을 이루던 대립유전자(<b>Y와 y</b>)가 생식세포를 만들 때(감수 분열) <b>분리되어 서로 다른 생식세포로</b> 들어가는 원리.<br>
+    → Yy는 Y를 가진 생식세포와 y를 가진 생식세포를 <b>1 : 1</b>로 만들어요.
+  </div>
+  <div class="callout analogy"><span class="t">비유: 동전 두 개 던지기</span>
+    엄마 동전(Y 또는 y)과 아빠 동전(Y 또는 y)을 동시에 던진다고 생각해요. yy가 나오려면 둘 다 y가 나와야 하니 확률은 ½ × ½ = <b>¼</b>. 그래서 초록색은 4개 중 1개꼴!
+  </div>
+</section>
+
+<section class="block" id="sim">
+  <h2><span class="num">6</span>완두 심기 시뮬레이션 — 정말 3:1이 될까?</h2>
+  <div class="card">
+    <p>잡종(Yy)끼리 자가 수분시켜 자손 2대를 원하는 개수만큼 얻어 봐요. 개수가 적으면 3:1에서 벗어나기 쉽지만, <b>많을수록 3:1에 가까워져요</b>.</p>
+    <div class="row">
+      <button class="btn" data-n="4">4개</button>
+      <button class="btn" data-n="20">20개</button>
+      <button class="btn" data-n="100">100개</button>
+      <button class="btn" data-n="1000">1,000개</button>
+      <button class="btn primary" data-n="8023">8,023개 (멘델과 같은 수)</button>
+    </div>
+    <div class="grid-2" style="margin-top:14px">
+      <div class="dots" id="sim-dots"></div>
+      <div>
+        <div class="grid-2" style="gap:10px">
+          <div class="stat"><div class="lbl"><span class="pea Y" style="width:14px;height:14px"></span> 노란색</div><div class="big-num" id="sim-y">0</div></div>
+          <div class="stat"><div class="lbl"><span class="pea g" style="width:14px;height:14px"></span> 초록색</div><div class="big-num" id="sim-g">0</div></div>
+        </div>
+        <div class="stat" style="margin-top:10px"><div class="lbl">노란색 : 초록색</div><div class="big-num" id="sim-r">– : 1</div></div>
+        <p class="small muted" style="margin-top:10px"><span class="xtag"></span>멘델의 실제 결과: 노란색 6,022개 : 초록색 2,001개 = <b>3.01 : 1</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="test">
+  <h2><span class="num">7</span>더 알아보기: 노란색 완두가 순종인지 잡종인지 알아내려면?</h2>
+  <details class="adv"><summary>🎓 고등 과정 심화: 검정 교배 <small>(펼쳐 보기)</small></summary>
+  <div class="card" style="margin:0">
+    <p>노란색 완두는 YY일 수도, Yy일 수도 있어서 겉모습만으로는 몰라요. 이때 <b>열성 순종(yy)</b>과 교배해 보면 알 수 있어요. (검정 교배)</p>
+    <div class="grid-2">
+      <div class="stat"><b class="mono">YY × yy</b> → 자손 모두 Yy → <b>모두 노란색</b><br><span class="small muted">→ 순종이었구나!</span></div>
+      <div class="stat"><b class="mono">Yy × yy</b> → Yy : yy = 1 : 1 → <b>노란색 : 초록색 = 1 : 1</b><br><span class="small muted">→ 잡종이었구나!</span></div>
+    </div>
+  </div>
+  </details>
+</section>
+
+<section class="block" id="check">
+  <h2><span class="num">8</span>확인 문제</h2>
+  <div id="quiz"></div>
+</section>
+
+<section class="block" id="sum">
+  <h2><span class="num">9</span>핵심 요약</h2>
+  <div class="summary">
+    <ol>
+      <li>완두가 좋은 재료인 까닭: <b>기</b>르기 쉽다, 한 <b>세</b>대가 짧다, <b>자</b>손이 많다, <b>대</b>립 형질이 뚜렷하다.</li>
+      <li>순종(YY) × 순종(yy) → 자손 1대 모두 Yy (우성 형질만 나타남).</li>
+      <li>자손 1대 자가 수분 → 자손 2대 유전자형 YY : Yy : yy = <b>1 : 2 : 1</b>, 표현형 = <b>3 : 1</b>.</li>
+      <li><b>분리의 법칙</b>: 쌍을 이룬 대립유전자가 생식세포 형성 시 분리되어 서로 다른 생식세포로 들어간다.</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+(function () {
+  /* ---------- 멘델의 7가지 형질 ---------- */
+  var seven = [
+    ["씨의 모양", "둥근 것", "주름진 것", 5474, 1850],
+    ["씨의 색깔", "노란색", "초록색", 6022, 2001],
+    ["꽃의 색깔", "보라색", "흰색", 705, 224],
+    ["콩깍지 모양", "매끈한 것", "잘록한 것", 882, 299],
+    ["콩깍지 색깔", "초록색", "노란색", 428, 152],
+    ["꽃이 피는 위치", "잎겨드랑이", "줄기 끝", 651, 207],
+    ["줄기의 키", "큰 것", "작은 것", 787, 277]
+  ];
+  document.getElementById("m7").innerHTML = seven.map(function (r) {
+    return "<tr><td>" + r[0] + "</td><td><b>" + r[1] + "</b></td><td>" + r[2] + '</td><td class="num">' + r[3].toLocaleString() + '</td><td class="num">' + r[4].toLocaleString() + '</td><td class="num"><b>' + (r[3] / r[4]).toFixed(2) + " : 1</b></td></tr>";
+  }).join("");
+
+  /* ---------- 퍼넷 사각형 ---------- */
+  function sortG(a, b) { return a === a.toUpperCase() && b !== b.toUpperCase() ? a + b : b === b.toUpperCase() && a !== a.toUpperCase() ? b + a : a + b; }
+  function gcd(a, b) { return b ? gcd(b, a % b) : a; }
+  function ratio(arr) {
+    var nz = arr.filter(function (x) { return x > 0; });
+    var g = nz.reduce(gcd);
+    return nz.map(function (x) { return x / g; });
+  }
+  function punnett() {
+    var a = document.getElementById("p1").value, b = document.getElementById("p2").value;
+    var ga = [a[0], a[1]], gb = [b[0], b[1]];
+    var html = '<div class="h"></div>' + gb.map(function (x) { return '<div class="h">' + x + "</div>"; }).join("");
+    var cnt = { YY: 0, Yy: 0, yy: 0 };
+    ga.forEach(function (x) {
+      html += '<div class="h">' + x + "</div>";
+      gb.forEach(function (y) {
+        var g = sortG(x, y); cnt[g]++;
+        var yel = g.indexOf("Y") >= 0;
+        html += '<div class="cell"><span class="pea ' + (yel ? "Y" : "g") + '"></span>' + g + "<small>" + (yel ? "노란색" : "초록색") + "</small></div>";
+      });
+    });
+    document.getElementById("pg").innerHTML = html;
+    var gs = ["YY", "Yy", "yy"].filter(function (k) { return cnt[k]; });
+    var gr = ratio(gs.map(function (k) { return cnt[k]; }));
+    document.getElementById("pr-g").textContent = gs.join(" : ") + " = " + gr.join(" : ");
+    var y = cnt.YY + cnt.Yy, g2 = cnt.yy;
+    var pr = ratio([y, g2]);
+    document.getElementById("pr-p").textContent = y && g2 ? "노랑 : 초록 = " + pr.join(" : ") : y ? "모두 노란색" : "모두 초록색";
+    var msg = "";
+    if (a === "Yy" && b === "Yy") msg = "잡종끼리 교배 → 멘델의 자손 2대! 초록색이 나올 확률은 <b>1/4</b>, 노란색 중 순종(YY)의 비율은 <b>1/3</b>이에요.";
+    else if ((a === "YY" && b === "yy") || (a === "yy" && b === "YY")) msg = "순종끼리 교배 → 멘델의 자손 1대. 모두 잡종(Yy)이고 우성인 노란색만 나타나요.";
+    else if ((a === "Yy" && b === "yy") || (a === "yy" && b === "Yy")) msg = "잡종 × 열성 순종 → 노란색 : 초록색 = 1 : 1이에요.";
+    else if (a === b) msg = "같은 순종끼리 교배하면 자손도 모두 부모와 같아요.";
+    else msg = "YY × Yy → 모두 노란색이지만 유전자형은 YY와 Yy가 1 : 1이에요.";
+    document.getElementById("pr-msg").innerHTML = msg;
+  }
+  document.getElementById("p1").onchange = punnett;
+  document.getElementById("p2").onchange = punnett;
+  punnett();
+
+  /* ---------- 시뮬레이션 ---------- */
+  function sim(n) {
+    var y = 0, g = 0, dots = "";
+    for (var i = 0; i < n; i++) {
+      var a = Math.random() < 0.5, b = Math.random() < 0.5; // true = Y
+      var yel = a || b;
+      if (yel) y++; else g++;
+      if (i < 600) dots += '<i style="background:' + (yel ? "#eab308" : "#65a30d") + '"></i>';
+    }
+    document.getElementById("sim-dots").innerHTML = dots + (n > 600 ? '<span class="small muted" style="width:100%">… 처음 600개만 표시</span>' : "");
+    document.getElementById("sim-y").textContent = y.toLocaleString();
+    document.getElementById("sim-g").textContent = g.toLocaleString();
+    document.getElementById("sim-r").textContent = g ? (y / g).toFixed(2) + " : 1" : "초록색 0개!";
+  }
+  document.querySelectorAll("#sim [data-n]").forEach(function (b) {
+    b.onclick = function () {
+      document.querySelectorAll("#sim [data-n]").forEach(function (x) { x.classList.remove("primary"); });
+      b.classList.add("primary");
+      sim(Number(b.getAttribute("data-n")));
+    };
+  });
+  sim(8023);
+
+  /* ---------- 문제 ---------- */
+  S2.quiz("quiz", [
+    { t: "mc", q: "완두가 유전 실험 재료로 알맞은 까닭이 <u>아닌</u> 것은?", o: ["기르기 쉽다.", "한 세대가 짧다.", "자손의 수가 많다.", "대립 형질이 뚜렷하다.", "대립 형질이 복잡하고 환경의 영향을 많이 받는다."], a: 4, e: "⑤는 <b>사람</b>의 유전 연구가 어려운 까닭이에요." },
+    { t: "ox", q: "우성 형질은 열성 형질보다 생존에 유리한 좋은 형질이다.", a: false, e: "우성 = 잡종일 때 겉으로 나타나는 형질일 뿐이에요." },
+    { t: "mc", q: "순종 노란색(YY)과 순종 초록색(yy) 완두를 교배하여 얻은 자손 1대의 유전자형은?", o: ["YY", "Yy", "yy", "YY와 yy", "YY, Yy, yy"], a: 1, e: "YY는 Y만, yy는 y만 주므로 모두 Yy" },
+    { t: "mc", q: "자손 1대(Yy)를 자가 수분하여 자손 2대 800개를 얻었다. 이론상 초록색 완두는 몇 개인가?", tag: "계산", o: ["100개", "200개", "300개", "400개", "600개"], a: 1, e: "초록색(yy) = 1/4 → 800 × 1/4 = <b>200개</b>" },
+    { t: "mc", q: "자손 2대의 노란색 완두 중 순종(YY)의 비율은?", tag: "계산", o: ["1/4", "1/3", "1/2", "2/3", "3/4"], a: 1, e: "노란색 = YY 1 + Yy 2 = 3칸 중 YY는 1칸 → <b>1/3</b>. (분모가 '전체 4'가 아니라 '노란색 3'!)" },
+    { t: "mc", q: "자손 2대의 유전자형의 비 YY : Yy : yy는?", o: ["1 : 1 : 1", "1 : 2 : 1", "3 : 0 : 1", "2 : 1 : 1", "9 : 3 : 3 : 1"], a: 1, e: "" },
+    { t: "short", q: "쌍을 이루고 있던 대립유전자가 생식세포 형성 과정에서 분리되어 서로 다른 생식세포로 들어가는 원리를 무엇이라고 하는가?", a: ["분리의 법칙", "분리의법칙", "분리 법칙"], e: "" },
+    { t: "mc", tag: "심화", q: "잡종 노란색 완두(Yy)를 초록색 완두(yy)와 교배할 때 자손의 표현형 비(노란색 : 초록색)는?", o: ["1 : 0", "1 : 1", "3 : 1", "1 : 2 : 1", "0 : 1"], a: 1, e: "Yy × yy → Yy : yy = 1 : 1" },
+    { t: "essay", q: "멘델의 유전 실험이 지닌 의의를 서술하시오.", a: "형질이 물감처럼 <b>섞여서 유전되지 않는다</b>는 것을 증명하고, <b>유전자(유전 인자)</b>를 바탕으로 유전 원리를 설명하였다. 이 원리는 오늘날에도 다양한 유전 현상을 설명하는 기본 원리이다." }
+  ]);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>별의 밝기와 등급</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/common.js"></script>
+<style>
+  .dark-panel { background: radial-gradient(120% 120% at 50% 0%, #1b2550, #070b1a); border-radius: 14px; color: #e2e8f0; }
+  #ladder, #flash, #move-svg { width: 100%; height: auto; display: block; }
+  th.sort { cursor: pointer; user-select: none; }
+  th.sort::after { content: " ↕"; opacity: .4; font-size: .8em; }
+  .star-dot { display: inline-block; border-radius: 50%; background: #fff; box-shadow: 0 0 6px #fff; vertical-align: middle; }
+</style>
+</head>
+<body class="unit-star">
+<div class="page">
+<nav class="toc"></nav>
+<main>
+
+<div class="hero">
+  <span class="unit">Ⅶ. 별과 우주 · 1. 별 · 2차시</span>
+  <h1>밝기로 구하는 별까지의 거리 — 별의 등급</h1>
+  <p class="lead">밤하늘에서 밝게 보이는 별이 정말 밝은 별일까요? 아니면 그저 가까이 있는 걸까요?</p>
+  <ul class="goals">
+    <li>등급과 밝기의 관계(1등급 차 ≈ 2.5배, 5등급 차 = 100배)를 설명할 수 있다.</li>
+    <li>겉보기 등급과 절대 등급을 구분할 수 있다.</li>
+    <li>겉보기 등급과 절대 등급을 비교하여 별까지의 거리를 판단할 수 있다.</li>
+  </ul>
+</div>
+
+<section class="block" id="history">
+  <h2><span class="num">1</span>별의 등급은 어떻게 생겼을까?</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>🏛 히파르코스 (기원전 2세기, 그리스)</h3>
+      <p><b>맨눈으로 보았을 때</b> 가장 밝은 별을 <b>1등급</b>, 가장 어두운 별을 <b>6등급</b>으로 나누었어요.</p>
+      <p class="small muted">그래서 등급은 <b>숫자가 작을수록 밝아요</b>. 달리기 1등이 제일 잘하는 것처럼!</p>
+    </div>
+    <div class="card">
+      <h3>🔭 포그슨 (1856년, 영국) <span class="xtag"></span></h3>
+      <p>측정해 보니 1등급 별은 6등급 별보다 약 <b>100배</b> 밝았어요. 그래서 이렇게 정했어요.</p>
+      <ul>
+        <li><b>5등급 차 = 100배</b></li>
+        <li><b>1등급 차 ≈ 2.5배</b> (2.5를 5번 곱하면 약 100)</li>
+      </ul>
+      <p class="small muted">1보다 밝으면 0등급, −1등급처럼 <b>음수</b>로, 6보다 어두우면 7, 8등급…으로 확장했어요.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="ladder-sec">
+  <h2><span class="num">2</span>밝기 등급 사다리</h2>
+  <p class="small muted"><span class="xtag"></span>여러 천체의 겉보기 등급 예시예요. 수치는 외울 필요 없어요.</p>
+  <div class="card dark-panel" style="padding:14px">
+    <svg viewBox="0 0 720 200" id="ladder" aria-label="여러 천체의 겉보기 등급"></svg>
+  </div>
+  <p class="small muted">왼쪽으로 갈수록 밝게 보여요. 태양(−26.7등급)은 가장 어두운 맨눈 별(6등급)보다 수십조 배나 밝게 보여요.</p>
+</section>
+
+<section class="block" id="ratio">
+  <h2><span class="num">3</span>등급 차와 밝기 차</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="table-wrap"><table class="data center-all">
+        <thead><tr><th>등급 차</th><th>밝기 차</th><th>계산</th></tr></thead>
+        <tbody>
+          <tr><td>1등급</td><td>약 2.5배</td><td class="small muted">2.5</td></tr>
+          <tr><td>2등급</td><td>약 6.3배</td><td class="small muted">2.5 × 2.5</td></tr>
+          <tr><td>3등급</td><td>약 16배</td><td class="small muted">2.5 × 2.5 × 2.5</td></tr>
+          <tr><td>4등급</td><td>약 40배</td><td class="small muted">2.5를 4번</td></tr>
+          <tr class="em"><td><b>5등급</b></td><td><b>100배</b></td><td class="small muted">2.5를 5번</td></tr>
+          <tr><td>10등급</td><td><b>10000배</b></td><td class="small muted">100 × 100</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout analogy"><span class="t">요령</span>5등급 = 100배는 외우고, 10등급 차 = 5등급 차가 두 번 = 100 × 100 = 10000배!</div>
+    </div>
+    <div class="card">
+      <h3>🧮 두 별의 밝기 비교</h3>
+      <div class="row">
+        <label class="field">별 A 등급<input type="number" id="ma" value="1" step="0.5" style="width:110px"></label>
+        <label class="field">별 B 등급<input type="number" id="mb" value="6" step="0.5" style="width:110px"></label>
+      </div>
+      <div class="stat" style="margin-top:12px"><div class="big-num" id="ratio-out"></div><div class="small" id="ratio-exp"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="inverse">
+  <h2><span class="num">4</span>별의 밝기에 영향을 주는 것: 방출하는 빛의 양 + 거리</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>🔦 손전등 실험</h3>
+      <p>(가) 같은 거리에 있을 때 → <b>빛을 많이 내는</b> 손전등이 더 밝다.<br>(나) 같은 빛을 낼 때 → <b>가까이 있는</b> 손전등이 더 밝다.</p>
+      <p>👉 별의 밝기는 <b>별이 방출하는 빛의 양</b>과 <b>별까지의 거리</b>에 따라 달라져요.</p>
+    </div>
+    <div class="card">
+      <h3>거리가 2배가 되면 밝기는?</h3>
+      <svg viewBox="0 0 440 230" id="flash" aria-label="거리에 따라 빛이 퍼지는 면적"></svg>
+      <label class="field">광원에서 떨어진 거리 <b><span id="fl-d">1</span>배</b>
+        <input type="range" id="fl" min="1" max="3" step="1" value="1">
+      </label>
+      <p id="fl-msg" class="small" style="margin-top:6px"></p>
+    </div>
+  </div>
+  <div class="callout exam"><span class="t">밝기는 거리의 제곱에 반비례</span>
+    거리 2배 → 밝기 1/4 &nbsp;·&nbsp; 거리 3배 → 1/9 &nbsp;·&nbsp; 거리 <b>10배 → 1/100 → 5등급 커짐(어두워짐)</b>
+  </div>
+</section>
+
+<section class="block" id="abs">
+  <h2><span class="num">5</span>겉보기 등급 vs 절대 등급</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>👀 겉보기 등급</h3>
+      <p><b>우리 눈에 보이는</b> 밝기를 나타낸 등급. 거리를 고려하지 않아요.</p>
+      <p class="small">→ 가까우면 실제보다 밝게, 멀면 어둡게 보여요.</p>
+    </div>
+    <div class="card">
+      <h3>📏 절대 등급</h3>
+      <p>모든 별이 <b>10 pc</b>(약 32.6광년) 거리에 있다고 가정했을 때의 밝기 등급.</p>
+      <p class="small">→ 별의 <b>실제 밝기</b>를 비교할 수 있어요.</p>
+    </div>
+  </div>
+  <div class="callout analogy"><span class="t">비유: 가로등과 스마트폰 손전등</span>
+    눈앞의 스마트폰 손전등은 먼 곳의 가로등보다 밝게 보여요(겉보기 등급). 하지만 둘을 모두 <b>똑같이 10 m 앞</b>에 두면 가로등이 훨씬 밝죠(절대 등급). 절대 등급은 모든 별을 <b>같은 거리에 줄 세워</b> 비교하는 방법이에요.
+  </div>
+
+  <div class="card">
+    <h3>🚀 별 옮기기 시뮬레이터</h3>
+    <div class="row">
+      <label class="field">별 고르기
+        <select id="mv-star"></select>
+      </label>
+      <label class="field" style="flex:1;min-width:220px">지구에서의 거리 <b><span id="mv-d"></span> pc</b>
+        <input type="range" id="mv-r" min="-0.3" max="3" step="0.01" value="1">
+      </label>
+    </div>
+    <div class="dark-panel" style="margin-top:12px;padding:8px"><svg viewBox="0 0 700 150" id="move-svg"></svg></div>
+    <div class="grid-4" style="margin-top:12px">
+      <div class="stat"><div class="lbl">겉보기 등급 (m)</div><div class="big-num" id="mv-m"></div></div>
+      <div class="stat"><div class="lbl">절대 등급 (M)</div><div class="big-num" id="mv-M"></div></div>
+      <div class="stat"><div class="lbl">m − M</div><div class="big-num" id="mv-diff"></div></div>
+      <div class="stat"><div class="lbl">판단</div><div style="font-weight:800" id="mv-judge"></div></div>
+    </div>
+    <p class="small muted" style="margin-top:8px"><span class="xtag"></span>시뮬레이터 속 계산식은 고등 과정이에요. 별을 멀리 보내도 <b>절대 등급은 변하지 않아요</b>. 겉보기 등급만 바뀌어요. (10 pc일 때 m = M)</p>
+  </div>
+
+  <div class="table-wrap"><table class="data center-all">
+    <thead><tr><th>(겉보기 등급 − 절대 등급)</th><th>뜻</th><th>거리</th></tr></thead>
+    <tbody>
+      <tr><td><b>음수</b> (겉보기 &lt; 절대)</td><td>실제보다 밝게 보임</td><td><b>10 pc보다 가까움</b></td></tr>
+      <tr><td><b>0</b> (겉보기 = 절대)</td><td>기준 거리 그대로</td><td><b>10 pc</b></td></tr>
+      <tr><td><b>양수</b> (겉보기 &gt; 절대)</td><td>실제보다 어둡게 보임</td><td><b>10 pc보다 멂</b></td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout exam"><span class="t">한 줄 암기</span>(겉보기 등급 − 절대 등급) 값이 <b>작을수록 가깝고, 클수록 멀다.</b></div>
+</section>
+
+<section class="block" id="data">
+  <h2><span class="num">6</span>실제 밝은 별 자료 분석</h2>
+  <p class="small muted"><span class="xtag"></span>표 머리글을 누르면 정렬돼요. 값은 근삿값이고 외울 필요 없어요(베텔게우스는 밝기가 변하는 별). 판단 방법만 연습하세요.</p>
+  <div class="table-wrap"><table class="data" id="stbl">
+    <thead><tr><th class="sort" data-k="n">별</th><th class="sort num" data-k="m">겉보기 등급</th><th class="sort num" data-k="M">절대 등급</th><th class="sort num" data-k="diff">m − M</th><th class="sort num" data-k="d">거리 (pc)</th><th>색</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <div class="grid-2">
+    <div class="card"><p><b>Q1.</b> 태양을 빼고 우리 눈에 가장 밝게 보이는 별은?</p><button class="btn" data-reveal="d1">정답</button><div class="answer" id="d1"><b>시리우스</b> (겉보기 등급 −1.46으로 가장 작음)</div></div>
+    <div class="card"><p><b>Q2.</b> 실제로 가장 밝은 별은?</p><button class="btn" data-reveal="d2">정답</button><div class="answer" id="d2"><b>리겔</b> (절대 등급 약 −7.8로 가장 작음). 태양은 절대 등급 4.8로 실제로는 평범한 별이에요!</div></div>
+    <div class="card"><p><b>Q3.</b> 10 pc보다 가까이 있는 별을 모두 고르면?</p><button class="btn" data-reveal="d3">정답</button><div class="answer" id="d3">m − M이 <b>음수</b>인 별: 태양, 알파 센타우리 A, 시리우스, 알타이르, 베가</div></div>
+    <div class="card"><p><b>Q4.</b> 가장 멀리 있는 별은?</p><button class="btn" data-reveal="d4">정답</button><div class="answer" id="d4">m − M이 가장 큰 <b>리겔</b> (약 7.9)</div></div>
+  </div>
+</section>
+
+<section class="block" id="bank">
+  <h2><span class="num">7</span>문제은행 단골 계산</h2>
+  <div class="grid-2">
+    <div class="card"><p>① 1등급인 별 <b>100개</b>가 모여 있으면 몇 등급 별 1개의 밝기와 같을까?</p><button class="btn" data-reveal="b1">풀이</button><div class="answer" id="b1">100배 밝다 = 5등급 차 → 1 − 5 = <b>−4등급</b></div></div>
+    <div class="card"><p>② 현재 1등급으로 보이는 별까지의 거리가 <b>10배</b> 멀어지면?</p><button class="btn" data-reveal="b2">풀이</button><div class="answer" id="b2">거리 10배 → 밝기 1/100 → 5등급 커짐 → <b>6등급</b></div></div>
+    <div class="card"><p>③ 3등급보다 밝고 5등급 차이가 나는 별은 몇 등급?</p><button class="btn" data-reveal="b3">풀이</button><div class="answer" id="b3">밝으면 숫자가 작아짐 → 3 − 5 = <b>−2등급</b></div></div>
+    <div class="card"><p>④ 절대 등급이 3등급인 별이 실제로 <b>100 pc</b>에 있다면 겉보기 등급은?</p><button class="btn" data-reveal="b4">풀이</button><div class="answer" id="b4">10 pc → 100 pc = 거리 10배 → 5등급 커짐 → 3 + 5 = <b>8등급</b></div></div>
+    <div class="card"><p>⑤ 겉보기 등급이 3등급인 별보다 약 16배 밝게 보이는 별의 겉보기 등급은?</p><button class="btn" data-reveal="b5">풀이</button><div class="answer" id="b5">16배 ≈ 3등급 차(2.5×2.5×2.5) → 3 − 3 = <b>0등급</b></div></div>
+    <div class="card"><p>⑥ 거리가 2배로 멀어지면 별의 밝기는?</p><button class="btn" data-reveal="b6">풀이</button><div class="answer" id="b6">밝기 ∝ 1/거리² → <b>1/4</b>로 어두워짐. 이때 겉보기 등급은 커지고, 절대 등급은 <b>변하지 않음</b>.</div></div>
+  </div>
+</section>
+
+<section class="block" id="check">
+  <h2><span class="num">8</span>확인 문제</h2>
+  <div id="quiz"></div>
+</section>
+
+<section class="block" id="sum">
+  <h2><span class="num">9</span>핵심 요약</h2>
+  <div class="summary">
+    <ol>
+      <li>등급은 숫자가 <b>작을수록 밝다</b>. 1등급 차 ≈ 2.5배, 5등급 차 = 100배.</li>
+      <li>밝기는 거리의 제곱에 반비례 (거리 10배 → 1/100 → 5등급 커짐).</li>
+      <li>겉보기 등급 = 눈에 보이는 밝기, 절대 등급 = <b>10 pc</b>에 놓았을 때 밝기(실제 밝기).</li>
+      <li>(겉보기 − 절대) &lt; 0 → 10 pc보다 가까움, = 0 → 10 pc, &gt; 0 → 10 pc보다 멂.</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+(function () {
+  /* ---------- 등급 사다리 ---------- */
+  var L = [
+    [-26.7, "태양"], [-12.7, "보름달"], [-4.6, "금성(최대)"], [-1.5, "시리우스"],
+    [0, "베가"], [2, "북극성"], [6, "맨눈 한계"], [10, "쌍안경 한계"], [30, "허블 우주 망원경"]
+  ];
+  function lx(m) { return 40 + (m + 28) / 60 * 650; }
+  var s = '<defs><linearGradient id="lg" x1="0" x2="1"><stop offset="0" stop-color="#fef3c7"/><stop offset=".45" stop-color="#94a3b8"/><stop offset="1" stop-color="#0f172a"/></linearGradient></defs>';
+  s += '<rect x="40" y="96" width="650" height="10" rx="5" fill="url(#lg)"/>';
+  [-25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30].forEach(function (m) {
+    s += '<line x1="' + lx(m) + '" y1="106" x2="' + lx(m) + '" y2="114" stroke="#94a3b8"/><text x="' + lx(m) + '" y="128" fill="#94a3b8" font-size="11" text-anchor="middle">' + m + "</text>";
+  });
+  L.forEach(function (p, i) {
+    var x = lx(p[0]), up = i % 2 === 0, r = Math.max(1.5, 9 - (p[0] + 27) / 6);
+    s += '<circle cx="' + x + '" cy="101" r="' + r + '" fill="#fff" opacity=".95"/>';
+    s += '<line x1="' + x + '" y1="' + (up ? 90 : 112) + '" x2="' + x + '" y2="' + (up ? 60 : 150) + '" stroke="#64748b"/>';
+    s += '<text x="' + x + '" y="' + (up ? 52 : 166) + '" fill="#e2e8f0" font-size="12" text-anchor="middle">' + p[1] + '</text><text x="' + x + '" y="' + (up ? 36 : 182) + '" fill="#fde68a" font-size="11" text-anchor="middle">' + p[0] + "</text>";
+  });
+  s += '<text x="40" y="195" fill="#fde68a" font-size="12">← 밝다</text><text x="690" y="195" fill="#94a3b8" font-size="12" text-anchor="end">어둡다 →</text>';
+  document.getElementById("ladder").innerHTML = s;
+
+  /* ---------- 등급 비교 ---------- */
+  function ratio() {
+    var a = Number(document.getElementById("ma").value), b = Number(document.getElementById("mb").value);
+    var d = Math.abs(a - b), r = Math.pow(100, d / 5);
+    var brighter = a < b ? "A" : a > b ? "B" : null;
+    document.getElementById("ratio-out").textContent = brighter ? "별 " + brighter + "가 약 " + (r >= 100 ? Math.round(r).toLocaleString() : r.toFixed(1)) + "배 밝다" : "두 별의 밝기가 같다";
+    document.getElementById("ratio-exp").innerHTML = brighter ? "등급 차 " + d + " → 2.5를 " + d + "번 곱한 값(정확히는 100<sup>" + d + "/5</sup>)" : "";
+  }
+  document.getElementById("ma").oninput = ratio; document.getElementById("mb").oninput = ratio; ratio();
+
+  /* ---------- 역제곱 ---------- */
+  function flash() {
+    var d = Number(document.getElementById("fl").value);
+    var t = '<circle cx="24" cy="115" r="11" fill="#fbbf24"/><text x="24" y="146" font-size="11" text-anchor="middle" fill="currentColor">광원</text>';
+    var cell = 30;
+    [1, 2, 3].forEach(function (k) {
+      var x = 20 + k * 125, n = k, size = n * cell, y0 = 115 - size / 2;
+      var on = k === d;
+      t += '<g opacity="' + (on ? 1 : 0.25) + '">';
+      for (var i = 0; i < n; i++) for (var j = 0; j < n; j++) {
+        t += '<rect x="' + (x - size / 2 + i * cell) + '" y="' + (y0 + j * cell) + '" width="' + (cell - 2) + '" height="' + (cell - 2) + '" fill="#fde68a" fill-opacity="' + (1 / (n * n)).toFixed(2) + '" stroke="#f59e0b"/>';
+      }
+      t += '<text x="' + x + '" y="' + (y0 - 8) + '" font-size="12" text-anchor="middle" fill="currentColor">거리 ' + k + " → " + n * n + "칸</text></g>";
+    });
+    var x = 20 + d * 125, half = d * cell / 2;
+    t += '<path d="M34 115 L' + (x - half) + " " + (115 - half) + " M34 115 L" + (x - half) + " " + (115 + half) + '" stroke="#f59e0b" stroke-dasharray="4 3"/>';
+    document.getElementById("flash").innerHTML = t;
+    document.getElementById("fl-d").textContent = d;
+    document.getElementById("fl-msg").innerHTML = "같은 빛이 <b>" + d * d + "칸</b>에 퍼지므로 한 칸이 받는 빛은 <b>1/" + d * d + "</b> → 밝기 1/" + d * d + (d === 1 ? "" : "배");
+  }
+  document.getElementById("fl").oninput = flash; flash();
+
+  /* ---------- 별 자료 ---------- */
+  var ST = [
+    { n: "태양", m: -26.74, M: 4.83, d: 0.0000048, c: "황색" },
+    { n: "시리우스", m: -1.46, M: 1.42, d: 2.64, c: "백색" },
+    { n: "알파 센타우리 A", m: -0.01, M: 4.38, d: 1.34, c: "황색" },
+    { n: "아크투루스", m: -0.05, M: -0.3, d: 11.3, c: "주황색" },
+    { n: "베가 (직녀성)", m: 0.03, M: 0.58, d: 7.7, c: "백색" },
+    { n: "리겔", m: 0.13, M: -7.8, d: 260, c: "청백색" },
+    { n: "베텔게우스", m: 0.5, M: -5.9, d: 170, c: "적색" },
+    { n: "알타이르 (견우성)", m: 0.76, M: 2.2, d: 5.1, c: "백색" },
+    { n: "안타레스", m: 1.06, M: -5.3, d: 170, c: "적색" },
+    { n: "북극성", m: 1.98, M: -3.6, d: 130, c: "황백색" }
+  ];
+  ST.forEach(function (x) { x.diff = Math.round((x.m - x.M) * 100) / 100; });
+  var tb = document.querySelector("#stbl tbody"), sortK = null, asc = true;
+  function table() {
+    var rows = ST.slice();
+    if (sortK) rows.sort(function (a, b) { var r = sortK === "n" ? a.n.localeCompare(b.n, "ko") : a[sortK] - b[sortK]; return asc ? r : -r; });
+    tb.innerHTML = rows.map(function (x) {
+      return "<tr><td><b>" + x.n + '</b></td><td class="num">' + x.m.toFixed(2) + '</td><td class="num">' + x.M.toFixed(2) + '</td><td class="num" style="color:' + (x.diff < 0 ? "var(--ok)" : "var(--bad)") + '"><b>' + (x.diff > 0 ? "+" : "") + x.diff.toFixed(2) + '</b></td><td class="num">' + (x.d < 0.01 ? "0.000005" : x.d) + "</td><td>" + x.c + "</td></tr>";
+    }).join("");
+  }
+  document.querySelectorAll("#stbl th.sort").forEach(function (th) {
+    th.onclick = function () { var k = th.getAttribute("data-k"); asc = sortK === k ? !asc : true; sortK = k; table(); };
+  });
+  table();
+
+  /* ---------- 별 옮기기 ---------- */
+  var sel = document.getElementById("mv-star");
+  ST.filter(function (x) { return x.n !== "태양"; }).concat([{ n: "태양 (M = 4.83)", M: 4.83 }]).forEach(function (x, i) {
+    var o = document.createElement("option"); o.value = x.M; o.textContent = x.n + " (M = " + x.M + ")";
+    if (x.n.indexOf("태양") === 0) o.textContent = "태양 (M = 4.83)";
+    sel.appendChild(o);
+  });
+  sel.value = "4.83";
+  function mv() {
+    var M = Number(sel.value), d = Math.pow(10, Number(document.getElementById("mv-r").value));
+    var m = M + 5 * Math.log10(d / 10), diff = m - M;
+    document.getElementById("mv-d").textContent = d < 10 ? d.toFixed(1) : Math.round(d).toLocaleString();
+    document.getElementById("mv-m").textContent = m.toFixed(1);
+    document.getElementById("mv-M").textContent = M.toFixed(1);
+    document.getElementById("mv-diff").textContent = (diff > 0 ? "+" : "") + diff.toFixed(1);
+    var j = Math.abs(diff) < 0.05 ? "딱 10 pc" : diff < 0 ? "10 pc보다 가까움" : "10 pc보다 멂";
+    document.getElementById("mv-judge").textContent = j;
+    var px = 50 + (Math.log10(d) + 0.3) / 3.3 * 600;
+    var tenx = 50 + (1 + 0.3) / 3.3 * 600;
+    var bright = Math.max(0.08, Math.min(1, (8 - m) / 12)), r = 3 + 12 * bright;
+    var t = '<text x="20" y="80" fill="#93c5fd" font-size="13">🌍 지구</text>';
+    t += '<line x1="80" y1="75" x2="680" y2="75" stroke="#475569" stroke-dasharray="3 5"/>';
+    t += '<line x1="' + tenx + '" y1="20" x2="' + tenx + '" y2="130" stroke="#fde68a" stroke-dasharray="5 4"/><text x="' + tenx + '" y="145" fill="#fde68a" font-size="12" text-anchor="middle">10 pc 기준선</text>';
+    t += '<circle cx="' + px + '" cy="75" r="' + (r * 2.2) + '" fill="#fff" opacity="' + (bright * 0.25) + '"/><circle cx="' + px + '" cy="75" r="' + r + '" fill="#fff" opacity="' + (0.3 + bright * 0.7) + '"/>';
+    document.getElementById("move-svg").innerHTML = t;
+  }
+  sel.onchange = mv; document.getElementById("mv-r").oninput = mv; mv();
+
+  /* ---------- 문제 ---------- */
+  S2.quiz("quiz", [
+    { t: "mc", q: "별의 등급에 대한 설명으로 옳지 <u>않은</u> 것은?", o: ["등급의 숫자가 작을수록 밝은 별이다.", "1등급인 별은 6등급인 별보다 100배 밝다.", "1등급 사이의 밝기 차는 약 2.5배이다.", "절대 등급으로 별의 실제 밝기를 비교할 수 있다.", "겉보기 등급이 작을수록 어둡게 보인다."], a: 4, e: "겉보기 등급이 작을수록 <b>밝게</b> 보여요." },
+    { t: "mc", q: "절대 등급은 모든 별이 지구로부터 얼마의 거리에 있다고 가정한 밝기인가?", o: ["1 pc", "10 pc", "10 광년", "100 pc", "1 AU"], a: 1, e: "10 pc ≈ 32.6광년" },
+    { t: "mc", q: "겉보기 등급이 2등급, 절대 등급이 −3등급인 별에 대한 설명으로 옳은 것은?", o: ["10 pc에 있다.", "10 pc보다 가까이 있다.", "10 pc보다 멀리 있다.", "10 pc으로 옮기면 2등급으로 보인다.", "맨눈으로 볼 수 없다."], a: 2, e: "m − M = 2 − (−3) = +5 > 0 → 10 pc보다 멀어요. (실제로 100 pc)" },
+    { t: "short", q: "1등급의 별은 6등급의 별보다 몇 배 밝은가? (숫자만)", a: ["100", "100배"], e: "" },
+    { t: "mc", q: "별까지의 거리가 멀어질 때 옳지 <u>않은</u> 것은?", o: ["별의 밝기는 거리의 제곱에 반비례한다.", "거리가 2배, 3배가 되면 밝기는 1/4, 1/9이 된다.", "겉보기 등급이 커진다.", "절대 등급이 작아진다.", "단위 면적당 받는 별빛의 양이 줄어든다."], a: 3, e: "절대 등급은 거리가 바뀌어도 <b>변하지 않아요</b>." },
+    { t: "mc", q: "1등급인 별 100개가 모여 있을 때 이는 몇 등급 별 1개의 밝기와 같은가?", tag: "문제은행 유형", o: ["−5등급", "−4등급", "0등급", "5등급", "6등급"], a: 1, e: "100배 = 5등급 차 → 1 − 5 = −4" },
+    { t: "mc", q: "현재 1등급으로 보이는 별까지의 거리가 10배 멀어진다면 몇 등급으로 보이겠는가?", o: ["−4등급", "0등급", "2등급", "6등급", "11등급"], a: 3, e: "거리 10배 → 밝기 1/100 → 5등급 커짐 → 6등급" },
+    { t: "ox", q: "(겉보기 등급 − 절대 등급) 값이 클수록 멀리 있는 별이다.", a: true, e: "" },
+    { t: "essay", q: "고대 그리스의 히파르코스가 별을 구분한 기준을 <b>맨눈, 밝기, 등급, 6등급</b>을 모두 이용하여 서술하시오.",
+      a: "히파르코스는 <b>맨눈</b>으로 보았을 때 가장 <b>밝게</b> 보이는 별을 1<b>등급</b>, 가장 어둡게 보이는 별을 <b>6등급</b>으로 정하여 별을 구분하였다." }
+  ]);
+})();
+</script>
+</body>
+</html>

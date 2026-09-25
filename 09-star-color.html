@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>별의 색과 표면 온도</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/common.js"></script>
+<style>
+  .sky { background: radial-gradient(120% 120% at 50% 20%, #17224a, #050814); border-radius: 14px; }
+  #orion, #tstar { width: 100%; height: auto; display: block; }
+  .ostar { cursor: pointer; }
+  .ostar:hover circle.core { stroke: #fff; stroke-width: 2; }
+  .cbar { display: grid; grid-template-columns: repeat(7, 1fr); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .cbar div { padding: 14px 4px; text-align: center; font-weight: 800; font-size: .9rem; color: #1f2937; }
+  .cbar div small { display: block; font-weight: 400; font-size: .72rem; opacity: .8; }
+  .swatch-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .swatch { border: 1px solid var(--border); border-radius: 12px; padding: 10px; background: var(--surface); display: flex; gap: 10px; align-items: center; }
+  .swatch i { width: 28px; height: 28px; border-radius: 50%; flex: none; }
+  .swatch .small { line-height: 1.35; }
+</style>
+</head>
+<body class="unit-star">
+<div class="page">
+<nav class="toc"></nav>
+<main>
+
+<div class="hero">
+  <span class="unit">Ⅶ. 별과 우주 · 1. 별 · 3차시</span>
+  <h1>색으로 비교하는 별의 표면 온도</h1>
+  <p class="lead">겨울밤 오리온자리를 보면 왼쪽 위 어깨의 별은 붉고, 오른쪽 아래 발의 별은 푸르스름해요. 왜 별마다 색이 다를까요?</p>
+  <ul class="goals">
+    <li>별의 색이 다른 까닭을 설명할 수 있다.</li>
+    <li>별의 색을 표면 온도 순서대로 나열할 수 있다.</li>
+    <li>등급과 색 자료를 함께 해석할 수 있다.</li>
+  </ul>
+</div>
+
+<section class="block" id="why">
+  <h2><span class="num">1</span>별의 색이 다른 까닭</h2>
+  <div class="grid-2">
+    <div class="card extra">
+      <h3>🔥 불에 달군 쇠를 떠올려 봐요</h3>
+      <div class="table-wrap"><table class="data">
+        <tbody>
+          <tr><td>약 600 ℃</td><td style="color:#b91c1c"><b>어두운 빨간색</b></td></tr>
+          <tr><td>약 1000 ℃</td><td style="color:#ea580c"><b>주황색</b></td></tr>
+          <tr><td>약 1300 ℃ 이상</td><td style="color:#ca8a04"><b>노란색 → 흰색</b></td></tr>
+        </tbody>
+      </table></div>
+      <p>물체는 <b>온도가 높을수록</b> 붉은색 → 노란색 → 흰색 → 파란색 빛을 내요. 가스레인지의 가장 뜨거운 불꽃도 파란색이죠!</p>
+    </div>
+    <div class="card">
+      <p style="font-size:1.1rem">별의 색이 다른 까닭은 <span class="hl"><b>별의 표면 온도가 다르기 때문</b></span>이에요.</p>
+      <p>→ 별의 색을 보면 별의 <b>표면 온도</b>를 알 수 있어요.</p>
+      <div class="callout trap"><span class="t">함정: 수도꼭지와 반대!</span>
+        수도꼭지는 빨강 = 뜨거운 물, 파랑 = 찬물이지만, <b>별은 반대</b>예요. <b>파란 별이 더 뜨겁고</b>, 붉은 별이 더 차가워요.
+      </div>
+    </div>
+  </div>
+  <div class="cbar" aria-label="별의 색과 표면 온도">
+    <div style="background:#ff6b4a">적색<small>약 3,000 K</small></div>
+    <div style="background:#ffa05a">주황색<small>약 4,500 K</small></div>
+    <div style="background:#ffd966">황색<small>약 5,800 K</small></div>
+    <div style="background:#fff3b8">황백색<small>약 7,000 K</small></div>
+    <div style="background:#ffffff">백색<small>약 10,000 K</small></div>
+    <div style="background:#cfe0ff">청백색<small>약 20,000 K</small></div>
+    <div style="background:#8fb0ff">청색<small>30,000 K 이상</small></div>
+  </div>
+  <p class="center" style="margin-top:8px"><b>표면 온도 낮음 ─────────────────→ 높음</b></p>
+  <div class="callout analogy"><span class="t">순서 외우기</span>"<b>적 · 주 · 황 · 황백 · 백 · 청백 · 청</b>" — 무지개 순서(빨주노…파)를 떠올리면 쉬워요!</div>
+  <p class="small muted"><span class="xtag"></span>교과서는 온도 숫자 없이 "낮다 → 높다" 순서만 다뤄요. K(켈빈)은 절대 온도의 단위예요. 0 ℃ ≈ 273 K이므로, 5,800 K는 약 5,500 ℃예요. 온도값은 대략적인 예시예요.</p>
+</section>
+
+<section class="block" id="slider">
+  <h2><span class="num">2</span>표면 온도를 바꿔 보세요</h2>
+  <div class="card extra">
+    <div class="grid-2">
+      <div class="sky" style="padding:10px"><svg viewBox="0 0 300 220" id="tstar"></svg></div>
+      <div>
+        <label class="field">표면 온도 <b><span id="t-val"></span> K</b>
+          <input type="range" id="t" min="2500" max="35000" step="100" value="5800">
+        </label>
+        <div class="stat" style="margin-top:12px"><div class="lbl">별의 색</div><div class="big-num" id="t-name"></div></div>
+        <div class="stat" style="margin-top:10px"><div class="lbl">이런 별이 있어요</div><div id="t-ex"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="orion-sec">
+  <h2><span class="num">3</span>오리온자리 탐험 <span class="small muted" style="font-weight:400">— 별을 눌러 보세요</span></h2>
+  <div class="grid-2">
+    <div class="sky" style="padding:10px"><svg viewBox="0 0 400 400" id="orion" aria-label="오리온자리"></svg></div>
+    <div class="card" id="o-info" style="margin:0">
+      <h3>오리온자리 🏹</h3>
+      <p>겨울철 남쪽 하늘에서 가장 눈에 띄는 별자리예요. 가운데 나란히 선 <b>세 별(삼태성)</b>이 사냥꾼의 허리띠예요.</p>
+      <p>별을 눌러 색과 온도를 확인해 보세요. <span class="xtag"></span> <span class="small muted">(시험에는 베텔게우스=적색, 리겔=청백색만 나와요)</span></p>
+    </div>
+  </div>
+  <div class="callout exam"><span class="t">시험 단골</span>베텔게우스(<b>적색</b>) vs 리겔(<b>청백색</b>) → 표면 온도는 <b>리겔이 더 높다</b>.</div>
+</section>
+
+<section class="block" id="list">
+  <h2><span class="num">4</span>여러 별의 색과 표면 온도 <span class="xtag"></span></h2>
+  <div class="swatch-list" id="swatches"></div>
+  <p class="small muted" style="margin-top:8px">온도는 대략적인 값이에요. 태양은 황색 별로 표면 온도가 약 5,800 K예요.</p>
+</section>
+
+<section class="block" id="combo">
+  <h2><span class="num">5</span>종합: 등급 + 색 자료 해석</h2>
+  <div class="card">
+    <p>표는 별 (가)와 (나)의 특징이다.</p>
+    <div class="table-wrap"><table class="data center-all">
+      <thead><tr><th>구분</th><th>(가)</th><th>(나)</th></tr></thead>
+      <tbody>
+        <tr><td>겉보기 등급</td><td>1</td><td>3</td></tr>
+        <tr><td>절대 등급</td><td>3</td><td>−2</td></tr>
+        <tr><td>색</td><td>흰색</td><td>붉은색</td></tr>
+      </tbody>
+    </table></div>
+    <div class="grid-3">
+      <div><p><b>(1)</b> 실제로 더 밝은 별은?</p><button class="btn" data-reveal="k1">정답</button><div class="answer" id="k1"><b>(나)</b>. 절대 등급이 더 작아요(−2 &lt; 3).</div></div>
+      <div><p><b>(2)</b> 연주 시차가 더 큰 별은?</p><button class="btn" data-reveal="k2">정답</button><div class="answer" id="k2"><b>(가)</b>. m − M: (가) −2 (10 pc보다 가까움), (나) +5 (100 pc). 가까울수록 연주 시차가 커요.</div></div>
+      <div><p><b>(3)</b> 표면 온도가 더 높은 별은?</p><button class="btn" data-reveal="k3">정답</button><div class="answer" id="k3"><b>(가)</b>. 흰색 별이 붉은색 별보다 표면 온도가 높아요.</div></div>
+    </div>
+  </div>
+  <div class="callout exam"><span class="t">세 가지를 한 번에</span>
+    <b>실제 밝기</b> → 절대 등급 비교 &nbsp;|&nbsp; <b>거리·연주 시차</b> → (겉보기 − 절대) 비교 &nbsp;|&nbsp; <b>표면 온도</b> → 색 비교
+  </div>
+</section>
+
+<section class="block" id="check">
+  <h2><span class="num">6</span>확인 문제</h2>
+  <div id="quiz"></div>
+</section>
+
+<section class="block" id="sum">
+  <h2><span class="num">7</span>핵심 요약</h2>
+  <div class="summary">
+    <ol>
+      <li>별의 색이 다른 까닭 = <b>표면 온도가 다르기 때문</b>.</li>
+      <li>적색 → 주황색 → 황색 → 황백색 → 백색 → 청백색 → 청색 순으로 표면 온도가 <b>높다</b>.</li>
+      <li>파란 별이 뜨겁고 붉은 별이 차갑다 (수도꼭지와 반대!).</li>
+      <li>베텔게우스(적색) &lt; 태양(황색) &lt; 시리우스(백색) &lt; 리겔(청백색).</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+(function () {
+  var STOPS = [
+    [2500, [255, 90, 60], "적색"], [3700, [255, 125, 75], "적색"], [5000, [255, 170, 90], "주황색"],
+    [6000, [255, 222, 110], "황색"], [7500, [255, 244, 190], "황백색"], [10000, [255, 255, 255], "백색"],
+    [30000, [190, 212, 255], "청백색"], [35000, [140, 175, 255], "청색"]
+  ];
+  function colorOf(T) {
+    for (var i = 0; i < STOPS.length - 1; i++) {
+      var a = STOPS[i], b = STOPS[i + 1];
+      if (T <= b[0]) {
+        var f = (Math.log(T) - Math.log(a[0])) / (Math.log(b[0]) - Math.log(a[0]));
+        var c = a[1].map(function (v, k) { return Math.round(v + (b[1][k] - v) * f); });
+        return "rgb(" + c.join(",") + ")";
+      }
+    }
+    return "rgb(140,175,255)";
+  }
+  function nameOf(T) {
+    return T < 3700 ? "적색" : T < 5000 ? "주황색" : T < 6000 ? "황색" : T < 7500 ? "황백색" : T < 10000 ? "백색" : T < 30000 ? "청백색" : "청색";
+  }
+  var EX = {
+    "적색": "베텔게우스, 안타레스 (약 3,500 K)",
+    "주황색": "아크투루스 (약 4,300 K), 알데바란 (약 3,900 K)",
+    "황색": "태양 (약 5,800 K), 카펠라 (약 5,000 K)",
+    "황백색": "북극성 (약 6,000 K), 프로키온 (약 6,500 K)",
+    "백색": "시리우스 (약 9,900 K), 베가 (약 9,600 K)",
+    "청백색": "리겔 (약 12,000 K), 스피카 (약 22,000 K)",
+    "청색": "알니탁 등 매우 뜨거운 별 (30,000 K 이상)"
+  };
+  var tIn = document.getElementById("t");
+  function temp() {
+    var T = Number(tIn.value), c = colorOf(T), nm = nameOf(T);
+    document.getElementById("t-val").textContent = T.toLocaleString();
+    document.getElementById("t-name").textContent = nm;
+    document.getElementById("t-name").style.color = nm === "백색" || nm === "황백색" ? "var(--text)" : c;
+    document.getElementById("t-ex").textContent = EX[nm];
+    document.getElementById("tstar").innerHTML =
+      '<defs><radialGradient id="gl"><stop offset="0" stop-color="' + c + '" stop-opacity=".9"/><stop offset=".45" stop-color="' + c + '" stop-opacity=".25"/><stop offset="1" stop-color="' + c + '" stop-opacity="0"/></radialGradient></defs>' +
+      '<circle cx="150" cy="110" r="100" fill="url(#gl)"/><circle cx="150" cy="110" r="38" fill="' + c + '"/><circle cx="138" cy="98" r="12" fill="#fff" opacity=".45"/>';
+  }
+  tIn.oninput = temp; temp();
+
+  /* ---------- 오리온자리 ---------- */
+  var O = [
+    { n: "베텔게우스", x: 120, y: 95, T: 3500, m: "약 0.5 (변광)", d: "약 550광년", note: "크기가 태양의 약 700~1000배인 적색 초거성. 밝기가 변하는 별이에요." },
+    { n: "벨라트릭스", x: 285, y: 110, T: 22000, m: "1.6", d: "약 250광년", note: "오리온의 오른쪽 어깨" },
+    { n: "알니탁", x: 175, y: 215, dx: -10, dy: 5, anchor: "end", T: 29000, m: "1.8", d: "약 1,200광년", note: "허리띠 세 별 중 왼쪽, 매우 뜨거운 별" },
+    { n: "알닐람", x: 205, y: 205, dy: -14, T: 27000, m: "1.7", d: "약 2,000광년", note: "허리띠 세 별 중 가운데" },
+    { n: "민타카", x: 235, y: 194, dx: 10, dy: 5, anchor: "start", T: 29000, m: "2.2", d: "약 1,200광년", note: "허리띠 세 별 중 오른쪽" },
+    { n: "사이프", x: 150, y: 330, T: 26000, m: "2.1", d: "약 650광년", note: "오리온의 왼쪽 발" },
+    { n: "리겔", x: 300, y: 320, T: 12000, m: "0.1", d: "약 860광년", note: "오리온자리에서 가장 밝게 보이는 청백색 초거성" }
+  ];
+  var lines = [[0, 2], [1, 4], [2, 3], [3, 4], [2, 5], [4, 6], [0, 1]];
+  var s = "";
+  for (var i = 0; i < 90; i++) s += '<circle cx="' + ((i * 71.3) % 400).toFixed(1) + '" cy="' + ((i * 137.9) % 400).toFixed(1) + '" r="' + (i % 7 === 0 ? 1.2 : 0.7) + '" fill="#fff" opacity=".35"/>';
+  lines.forEach(function (l) { s += '<line x1="' + O[l[0]].x + '" y1="' + O[l[0]].y + '" x2="' + O[l[1]].x + '" y2="' + O[l[1]].y + '" stroke="#64748b" stroke-width="1.2" opacity=".7"/>'; });
+  O.forEach(function (st, i) {
+    var c = colorOf(st.T), big = st.n === "베텔게우스" || st.n === "리겔";
+    s += '<g class="ostar" data-i="' + i + '" tabindex="0"><circle cx="' + st.x + '" cy="' + st.y + '" r="' + (big ? 22 : 14) + '" fill="' + c + '" opacity=".22"/><circle class="core" cx="' + st.x + '" cy="' + st.y + '" r="' + (big ? 9 : 6) + '" fill="' + c + '"/>';
+    var lx = st.x + (st.dx || 0), ly = st.y + (st.dy != null ? st.dy : (big ? 36 : 26));
+    s += '<text x="' + lx + '" y="' + ly + '" fill="#e2e8f0" font-size="12" text-anchor="' + (st.anchor || "middle") + '">' + st.n + "</text></g>";
+  });
+  var osvg = document.getElementById("orion");
+  osvg.innerHTML = s;
+  osvg.querySelectorAll(".ostar").forEach(function (g) {
+    var st = O[Number(g.getAttribute("data-i"))];
+    var show = function () {
+      var c = colorOf(st.T);
+      document.getElementById("o-info").innerHTML = '<h3><span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:' + c + ';border:1px solid var(--border);vertical-align:-3px"></span> ' + st.n + "</h3>" +
+        '<div class="grid-2" style="gap:8px"><div class="stat"><div class="lbl">색</div><b>' + nameOf(st.T) + '</b></div><div class="stat"><div class="lbl">표면 온도</div><b>약 ' + st.T.toLocaleString() + ' K</b></div><div class="stat"><div class="lbl">겉보기 등급</div><b>' + st.m + '</b></div><div class="stat"><div class="lbl">거리</div><b>' + st.d + "</b></div></div><p style=\"margin-top:10px\">" + st.note + "</p>";
+    };
+    g.addEventListener("click", show);
+    g.addEventListener("keydown", function (e) { if (e.key === "Enter") show(); });
+  });
+
+  /* ---------- 여러 별 ---------- */
+  var SW = [
+    ["안타레스", 3500], ["베텔게우스", 3500], ["알데바란", 3900], ["아크투루스", 4300], ["카펠라", 5000], ["태양", 5800],
+    ["북극성", 6000], ["프로키온", 6500], ["베가", 9600], ["시리우스", 9900], ["리겔", 12000], ["스피카", 22000]
+  ];
+  document.getElementById("swatches").innerHTML = SW.map(function (x) {
+    return '<div class="swatch"><i style="background:' + colorOf(x[1]) + ';box-shadow:0 0 10px ' + colorOf(x[1]) + '"></i><div class="small"><b>' + x[0] + "</b><br>" + nameOf(x[1]) + " · 약 " + x[1].toLocaleString() + " K</div></div>";
+  }).join("");
+
+  /* ---------- 문제 ---------- */
+  S2.quiz("quiz", [
+    { t: "mc", q: "별의 색이 서로 다른 까닭은?", o: ["별의 크기가 다르기 때문", "별까지의 거리가 다르기 때문", "별의 표면 온도가 다르기 때문", "별의 나이가 같기 때문", "지구의 대기가 빛을 흡수하기 때문"], a: 2, e: "" },
+    { t: "mc", q: "표면 온도가 가장 높은 별의 색은?", o: ["적색", "주황색", "황색", "백색", "청색"], a: 4, e: "청색 > 청백색 > 백색 > 황백색 > 황색 > 주황색 > 적색" },
+    { t: "ox", q: "별의 표면 온도가 높을수록 붉은색을 띤다.", a: false, e: "표면 온도가 높을수록 <b>파란색</b>을 띠어요." },
+    { t: "mc", q: "오리온자리의 베텔게우스(적색)와 리겔(청백색)에 대한 설명으로 옳은 것은?", o: ["베텔게우스의 표면 온도가 더 높다.", "리겔의 표면 온도가 더 높다.", "두 별의 표면 온도는 같다.", "색으로는 표면 온도를 알 수 없다.", "리겔은 태양보다 표면 온도가 낮다."], a: 1, e: "" },
+    { t: "mc", q: "다음 별을 표면 온도가 낮은 것부터 옳게 나열한 것은? (ㄱ) 태양-황색 (ㄴ) 시리우스-백색 (ㄷ) 안타레스-적색", o: ["ㄱ-ㄴ-ㄷ", "ㄴ-ㄱ-ㄷ", "ㄷ-ㄱ-ㄴ", "ㄷ-ㄴ-ㄱ", "ㄴ-ㄷ-ㄱ"], a: 2, e: "적색(안타레스) < 황색(태양) < 백색(시리우스)" },
+    { t: "mc", q: "별의 특징에 대한 설명으로 옳은 것을 모두 고른 것은? ㄱ. 가까운 별일수록 연주 시차가 크다. ㄴ. 태양은 북극성보다 밝게 보이므로 겉보기 등급이 더 크다. ㄷ. 별의 표면 온도가 높을수록 붉은색을 띤다.", tag: "문제은행 유형",
+      o: ["ㄱ", "ㄷ", "ㄱ, ㄴ", "ㄴ, ㄷ", "ㄱ, ㄴ, ㄷ"], a: 0, e: "ㄴ. 밝게 보이면 겉보기 등급이 <b>작다</b>. ㄷ. 표면 온도가 높을수록 <b>파란색</b>." }
+  ]);
+})();
+</script>
+</body>
+</html>

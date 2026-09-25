@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>독립의 법칙</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/common.js"></script>
+<style>
+  .p16 { display: grid; grid-template-columns: 58px repeat(4, minmax(0, 1fr)); gap: 5px; }
+  .p16 > div { border-radius: 10px; display: grid; place-items: center; text-align: center; min-height: 64px; padding: 4px; transition: opacity .2s, transform .2s, box-shadow .2s; }
+  .p16 .h { background: var(--surface-2); font-family: var(--mono); font-weight: 800; }
+  .p16 .c { background: var(--surface); border: 1px solid var(--border); font-family: var(--mono); font-size: .82rem; font-weight: 700; gap: 0; }
+  .p16 .c.dim { opacity: .18; }
+  .p16 .c.hit { box-shadow: 0 0 0 3px var(--accent); }
+  .filters { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+  .bars2 { display: grid; gap: 10px; }
+  .bars2 .r { display: grid; grid-template-columns: 150px 1fr 110px; gap: 10px; align-items: center; font-size: .92rem; }
+  .bars2 .t { position: relative; height: 26px; background: var(--surface-2); border-radius: 8px; }
+  .bars2 .t i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 8px; }
+  .bars2 .t b { position: absolute; top: -3px; bottom: -3px; width: 3px; background: var(--text); border-radius: 2px; }
+  @media (max-width: 600px) { .bars2 .r { grid-template-columns: 90px 1fr 80px; font-size: .8rem; } }
+</style>
+</head>
+<body class="unit-gene">
+<div class="page">
+<nav class="toc"></nav>
+<main>
+
+<div class="hero">
+  <span class="unit">Ⅴ. 생식과 유전 · 2. 유전 · 2차시</span>
+  <h1>멘델이 밝힌 유전 원리 ② — 독립의 법칙</h1>
+  <p class="lead">씨의 모양과 색깔, 두 가지 형질을 한꺼번에 유전시키면 어떻게 될까요? 서로 "끼리끼리" 붙어 다닐까요, 따로 놀까요?</p>
+  <ul class="goals">
+    <li>두 가지 형질의 유전에서 자손 1대와 자손 2대의 결과를 설명할 수 있다.</li>
+    <li>잡종 1대(RrYy)가 만드는 생식세포 4종류를 쓸 수 있다.</li>
+    <li>독립의 법칙을 설명하고 9 : 3 : 3 : 1을 활용해 계산할 수 있다.</li>
+  </ul>
+</div>
+
+<section class="block" id="exp">
+  <h2><span class="num">1</span>두 가지 형질의 교배 실험</h2>
+  <div class="card">
+    <div class="table-wrap"><table class="data">
+      <thead><tr><th>세대</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td><b>어버이</b></td><td><span id="pv1"></span> 둥글고 노란색 <b class="mono">RRYY</b> × <span id="pv2"></span> 주름지고 초록색 <b class="mono">rryy</b></td></tr>
+        <tr><td><b>생식세포</b></td><td><b class="mono">RY</b> 만 &nbsp;/&nbsp; <b class="mono">ry</b> 만</td></tr>
+        <tr><td><b>자손 1대</b></td><td>모두 <b class="mono">RrYy</b> → 모두 <b>둥글고 노란색</b> (둥근 것 R, 노란색 Y가 우성)</td></tr>
+        <tr><td><b>자손 1대의 생식세포</b></td><td><b class="mono">RY : Ry : rY : ry = 1 : 1 : 1 : 1</b> (4종류)</td></tr>
+        <tr class="em"><td><b>자손 2대</b></td><td>둥글고 노란색 : 둥글고 초록색 : 주름지고 노란색 : 주름지고 초록색 = <b>9 : 3 : 3 : 1</b></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="callout think"><span class="t">잠깐! 어버이에 없던 모습이 나왔어요</span>
+    어버이는 '둥글고 노란색'과 '주름지고 초록색'뿐이었는데, 자손 2대에 <b>둥글고 초록색</b>, <b>주름지고 노란색</b>이 새로 나타났어요. 모양 유전자와 색깔 유전자가 <b>서로 붙어 다니지 않고 따로따로</b> 전달되었다는 증거예요!
+  </div>
+</section>
+
+<section class="block" id="gamete">
+  <h2><span class="num">2</span>RrYy는 왜 생식세포를 4종류 만들까?</h2>
+  <p>R/r 유전자와 Y/y 유전자는 <b>서로 다른 상동 염색체</b>에 있어요. 감수 1분열 중기에 상동 염색체가 늘어서는 방향이 <b>두 가지</b>라서 생식세포도 4종류가 돼요.</p>
+  <div class="card">
+    <svg viewBox="0 0 700 260" aria-label="감수 1분열 중기 배열 방법 두 가지와 생식세포">
+      <g id="gam"></g>
+    </svg>
+  </div>
+  <div class="callout analogy"><span class="t">비유: 옷 고르기</span>
+    상의(R 또는 r)와 하의(Y 또는 y)를 하나씩 고르는 방법은 2 × 2 = <b>4가지</b>: RY, Ry, rY, ry. 어떤 상의를 고르든 하의 선택에는 <b>영향이 없죠</b>. 이게 바로 '독립'이에요.
+  </div>
+</section>
+
+<section class="block" id="p16">
+  <h2><span class="num">3</span>16칸 퍼넷 사각형 탐험</h2>
+  <p>아래 버튼을 눌러 원하는 형질만 골라 보세요.</p>
+  <div class="card">
+    <div class="filters" id="filters"></div>
+    <div class="p16" id="grid"></div>
+    <p id="grid-msg" style="margin-top:12px"></p>
+  </div>
+  <div class="callout exam"><span class="t">독립의 법칙</span>
+    두 쌍 이상의 대립유전자가 <b>서로 영향을 미치지 않고</b>, 각각 <b>분리의 법칙에 따라</b> 유전되는 원리.<br>
+    증거: 자손 2대에서 모양만 보면 둥근 것 : 주름진 것 = 12 : 4 = <b>3 : 1</b>, 색만 보면 노란색 : 초록색 = 12 : 4 = <b>3 : 1</b>
+  </div>
+</section>
+
+<section class="block" id="data">
+  <h2><span class="num">4</span>멘델의 실제 결과와 비교</h2>
+  <div class="card extra">
+    <p>멘델은 자손 2대에서 완두 <b>556개</b>를 얻었어요. 막대는 실제 개수, 검은 선은 9:3:3:1로 계산한 예상값이에요.</p>
+    <div class="bars2" id="bars"></div>
+    <p class="small muted" style="margin-top:10px">실제 비 315 : 108 : 101 : 32 ≈ 9.8 : 3.4 : 3.2 : 1 → 거의 9 : 3 : 3 : 1!</p>
+  </div>
+</section>
+
+<section class="block" id="calc">
+  <h2><span class="num">5</span>계산 연습 — 이렇게 풀어요</h2>
+  <div class="callout exam"><span class="t">풀이 공식</span>
+    ① 16칸 중 몇 칸인지 찾기 (9, 3, 3, 1) &nbsp; ② 전체 개수 × (칸 수 ÷ 16) &nbsp; ③ "~중에서"가 나오면 <b>분모를 바꾸기!</b>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <p><b>예제 1.</b> 자손 2대에서 완두 1,600개를 얻었다. 주름지고 노란색인 완두는 이론상 몇 개?</p>
+      <button class="btn" data-reveal="c1">풀이 보기</button>
+      <div class="answer" id="c1">주름지고 노란색 = 3/16 → 1,600 × 3/16 = <b>300개</b></div>
+    </div>
+    <div class="card">
+      <p><b>예제 2.</b> 자손 2대에서 둥글고 노란색인 완두 중 순종(RRYY)의 비율은?</p>
+      <button class="btn" data-reveal="c2">풀이 보기</button>
+      <div class="answer" id="c2">둥글고 노란색 9칸 중 RRYY는 1칸 → <b>1/9</b></div>
+    </div>
+    <div class="card">
+      <p><b>예제 3.</b> 자손 2대에서 유전자형이 RrYy인 완두의 비율은?</p>
+      <button class="btn" data-reveal="c3">풀이 보기</button>
+      <div class="answer" id="c3">16칸 중 RrYy는 4칸 → 4/16 = <b>1/4</b> (Rr일 확률 1/2 × Yy일 확률 1/2)</div>
+    </div>
+    <div class="card">
+      <p><b>예제 4.</b> 자손 2대에서 둥근 완두가 1,200개였다. 이 중 주름진 완두는 이론상 몇 개였을까?</p>
+      <button class="btn" data-reveal="c4">풀이 보기</button>
+      <div class="answer" id="c4">둥근 : 주름진 = 3 : 1 → 1,200 ÷ 3 = <b>400개</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="meaning">
+  <h2><span class="num">6</span>멘델 실험의 의의</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>🎨 섞임 유전설 ❌</h3>
+      <p>멘델 이전에는 부모의 형질이 물감처럼 섞인다고 믿었어요. 그렇다면 노란색 × 초록색 = 연두색이 나와야 하고, 한번 섞이면 다시 초록색으로 돌아올 수 없죠.</p>
+    </div>
+    <div class="card">
+      <h3>🧩 입자 유전 ✅</h3>
+      <p>멘델은 자손 2대에서 숨어 있던 초록색이 <b>그대로 다시 나타나는 것</b>을 보여 주었어요. 유전자는 섞이지 않는 <b>독립된 단위</b>로 전달된다는 뜻이에요.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="check">
+  <h2><span class="num">7</span>확인 문제</h2>
+  <div id="quiz"></div>
+</section>
+
+<section class="block" id="sum">
+  <h2><span class="num">8</span>핵심 요약</h2>
+  <div class="summary">
+    <ol>
+      <li>RRYY × rryy → 자손 1대 모두 RrYy (둥글고 노란색).</li>
+      <li>RrYy가 만드는 생식세포: RY : Ry : rY : ry = <b>1 : 1 : 1 : 1</b>.</li>
+      <li>자손 2대 표현형 = <b>9 : 3 : 3 : 1</b>, 한 형질씩 보면 각각 3 : 1.</li>
+      <li><b>독립의 법칙</b>: 두 쌍 이상의 대립유전자가 서로 영향을 주지 않고 각각 분리의 법칙에 따라 유전된다.</li>
+      <li>의의: 형질은 섞이지 않고, 유전자로 유전 원리를 설명했다.</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+(function () {
+  function pea(round, yellow, s) {
+    s = s || 26;
+    var c = yellow ? "#eab308" : "#65a30d", l = yellow ? "#fde047" : "#bef264", r = s / 2 - 2, cx = s / 2, cy = s / 2;
+    var shape;
+    if (round) {
+      shape = '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="url(#pg' + (yellow ? "y" : "g") + ')" stroke="rgba(0,0,0,.3)"/>';
+    } else {
+      var pts = [];
+      for (var i = 0; i < 20; i++) {
+        var th = i / 20 * Math.PI * 2, rr = r * (i % 2 ? 0.8 : 1);
+        pts.push((cx + rr * Math.cos(th)).toFixed(1) + "," + (cy + rr * Math.sin(th)).toFixed(1));
+      }
+      shape = '<polygon points="' + pts.join(" ") + '" fill="url(#pg' + (yellow ? "y" : "g") + ')" stroke="rgba(0,0,0,.3)" stroke-linejoin="round"/>';
+    }
+    return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 ' + s + " " + s + '" style="vertical-align:middle"><defs>' +
+      '<radialGradient id="pgy" cx=".35" cy=".35"><stop offset="0" stop-color="#fef9c3"/><stop offset="1" stop-color="#eab308"/></radialGradient>' +
+      '<radialGradient id="pgg" cx=".35" cy=".35"><stop offset="0" stop-color="#ecfccb"/><stop offset="1" stop-color="#65a30d"/></radialGradient></defs>' + shape + "</svg>";
+  }
+  document.getElementById("pv1").innerHTML = pea(true, true, 22);
+  document.getElementById("pv2").innerHTML = pea(false, false, 22);
+
+  /* ---------- 생식세포 그림 ---------- */
+  var ch = S2.chromo;
+  function lab(x, y, t) { return '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-size="13" font-weight="800" fill="currentColor" font-family="monospace">' + t + "</text>"; }
+  function scenario(ox, flip) {
+    var s = '<ellipse cx="' + (ox + 90) + '" cy="120" rx="85" ry="80" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>';
+    s += '<line x1="' + (ox + 90) + '" y1="45" x2="' + (ox + 90) + '" y2="195" stroke="#7c3aed" stroke-dasharray="3 4" opacity=".5"/>';
+    // 긴 염색체: R / r
+    s += ch(ox + 76, 85, 40, "#3b82f6", true) + ch(ox + 104, 85, 40, "#ef4444", true);
+    s += lab(ox + 76, 55, "R") + lab(ox + 104, 55, "r");
+    // 짧은 염색체: Y / y (flip이면 위치 바뀜)
+    var yl = flip ? "y" : "Y", yr = flip ? "Y" : "y";
+    s += ch(ox + 76, 150, 26, flip ? "#f87171" : "#60a5fa", true) + ch(ox + 104, 150, 26, flip ? "#60a5fa" : "#f87171", true);
+    s += lab(ox + 76, 182, yl) + lab(ox + 104, 182, yr);
+    // 결과
+    var g1 = "R" + yl, g2 = "r" + yr;
+    s += '<path d="M' + (ox + 180) + ' 100 l 30 -30 M' + (ox + 180) + ' 140 l 30 30" stroke="currentColor" opacity=".5" fill="none"/>';
+    s += '<rect x="' + (ox + 212) + '" y="48" width="70" height="36" rx="10" fill="var(--accent-soft)"/>' + lab(ox + 247, 71, g1);
+    s += '<rect x="' + (ox + 212) + '" y="156" width="70" height="36" rx="10" fill="var(--accent-soft)"/>' + lab(ox + 247, 179, g2);
+    s += '<text x="' + (ox + 90) + '" y="228" text-anchor="middle" font-size="12" fill="currentColor">배열 ' + (flip ? "②" : "①") + "</text>";
+    return s;
+  }
+  document.getElementById("gam").innerHTML = scenario(20, false) + scenario(380, true) +
+    '<text x="350" y="252" text-anchor="middle" font-size="13" fill="currentColor" font-weight="700">두 배열이 같은 확률로 일어나므로 RY : ry : Ry : rY = 1 : 1 : 1 : 1</text>';
+
+  /* ---------- 16칸 ---------- */
+  var gam = ["RY", "Ry", "rY", "ry"];
+  function comb(a, b) {
+    var R = [a[0], b[0]].sort().join(""), Y = [a[1], b[1]].sort().join("");
+    return R + Y; // 대문자가 먼저 정렬됨
+  }
+  var cells = [];
+  var html = '<div class="h"></div>' + gam.map(function (g) { return '<div class="h">' + g + "</div>"; }).join("");
+  gam.forEach(function (a) {
+    html += '<div class="h">' + a + "</div>";
+    gam.forEach(function (b) {
+      var g = comb(a, b), round = g.indexOf("R") >= 0, yel = g.indexOf("Y") >= 0;
+      cells.push({ g: g, round: round, yel: yel });
+      html += '<div class="c" data-i="' + (cells.length - 1) + '">' + pea(round, yel, 26) + g + "</div>";
+    });
+  });
+  document.getElementById("grid").innerHTML = html;
+  var F = [
+    ["전체 보기", function () { return true; }, "16칸 = 둥글고 노랑 9 : 둥글고 초록 3 : 주름·노랑 3 : 주름·초록 1"],
+    ["둥글고 노란색", function (c) { return c.round && c.yel; }, "<b>9칸</b> (9/16) — 이 중 순종 RRYY는 딱 1칸!"],
+    ["둥글고 초록색", function (c) { return c.round && !c.yel; }, "<b>3칸</b> (3/16) — RRyy 1칸, Rryy 2칸"],
+    ["주름지고 노란색", function (c) { return !c.round && c.yel; }, "<b>3칸</b> (3/16) — rrYY 1칸, rrYy 2칸"],
+    ["주름지고 초록색", function (c) { return !c.round && !c.yel; }, "<b>1칸</b> (1/16) — rryy 하나뿐"],
+    ["모양만: 둥근 것", function (c) { return c.round; }, "둥근 것 <b>12칸</b> : 주름진 것 4칸 = <b>3 : 1</b> (분리의 법칙 그대로!)"],
+    ["색만: 노란색", function (c) { return c.yel; }, "노란색 <b>12칸</b> : 초록색 4칸 = <b>3 : 1</b>"],
+    ["순종만", function (c) { return c.g[0] === c.g[1] && c.g[2] === c.g[3]; }, "순종(두 쌍 모두 같은 유전자)은 대각선의 <b>4칸</b> → 1/4"],
+    ["RrYy만", function (c) { return c.g === "RrYy"; }, "<b>4칸</b> → 4/16 = 1/4 (자손 1대와 같은 유전자형)"]
+  ];
+  var fbox = document.getElementById("filters");
+  F.forEach(function (f, i) {
+    var b = document.createElement("button");
+    b.className = "btn" + (i === 0 ? " primary" : "");
+    b.textContent = f[0];
+    b.onclick = function () {
+      fbox.querySelectorAll("button").forEach(function (x) { x.classList.remove("primary"); });
+      b.classList.add("primary");
+      document.querySelectorAll("#grid .c").forEach(function (el) {
+        var c = cells[Number(el.getAttribute("data-i"))], hit = f[1](c);
+        el.classList.toggle("dim", !hit && i !== 0);
+        el.classList.toggle("hit", hit && i !== 0);
+      });
+      document.getElementById("grid-msg").innerHTML = f[2];
+    };
+    fbox.appendChild(b);
+  });
+  document.getElementById("grid-msg").innerHTML = F[0][2];
+
+  /* ---------- 멘델 데이터 ---------- */
+  var real = [["둥글고 노란색", 315, 9, true, true], ["둥글고 초록색", 108, 3, true, false], ["주름지고 노란색", 101, 3, false, true], ["주름지고 초록색", 32, 1, false, false]];
+  var max = 330;
+  document.getElementById("bars").innerHTML = real.map(function (r) {
+    var exp = 556 * r[2] / 16;
+    return '<div class="r"><span>' + pea(r[3], r[4], 18) + " " + r[0] + '</span><div class="t"><i style="width:' + (r[1] / max * 100) + "%;background:" + (r[4] ? "#eab308" : "#65a30d") + '"></i><b style="left:' + (exp / max * 100) + '%"></b></div><span class="small"><b>' + r[1] + "</b> (예상 " + exp.toFixed(0) + ")</span></div>";
+  }).join("");
+
+  /* ---------- 문제 ---------- */
+  S2.quiz("quiz", [
+    { t: "mc", q: "둥글고 노란색인 순종 완두(RRYY)와 주름지고 초록색인 순종 완두(rryy)를 교배하였을 때 자손 1대의 표현형은?", o: ["모두 둥글고 노란색", "모두 주름지고 초록색", "모두 둥글고 초록색", "둥글고 노란색 : 주름지고 초록색 = 1 : 1", "9 : 3 : 3 : 1"], a: 0, e: "자손 1대는 모두 RrYy → 우성 형질만 나타나요." },
+    { t: "mc", q: "RrYy인 완두가 만드는 생식세포의 종류와 비로 옳은 것은?", o: ["RY : ry = 1 : 1", "Rr : Yy = 1 : 1", "RY : Ry : rY : ry = 1 : 1 : 1 : 1", "RY : Ry : rY : ry = 9 : 3 : 3 : 1", "RrYy 1종류"], a: 2, e: "생식세포에는 R/r 중 하나, Y/y 중 하나가 들어가요." },
+    { t: "short", q: "자손 2대에서 완두 3,200개를 얻었다. 이론상 둥글고 초록색인 완두는 몇 개인가? (숫자만)", a: ["600", "600개"], e: "3,200 × 3/16 = <b>600</b>" },
+    { t: "mc", q: "자손 2대에서 주름지고 노란색인 완두 중 잡종(rrYy)의 비율은?", o: ["1/3", "1/2", "2/3", "3/4", "1/16"], a: 2, e: "주름지고 노란색 3칸 = rrYY 1 + rrYy 2 → <b>2/3</b>" },
+    { t: "ox", q: "자손 2대에서 씨의 모양만 따로 보면 둥근 것 : 주름진 것 = 3 : 1이다.", a: true, e: "(9+3) : (3+1) = 12 : 4 = 3 : 1" },
+    { t: "short", q: "두 쌍 이상의 대립유전자가 서로 영향을 미치지 않고 각각 분리의 법칙에 따라 유전되는 원리는?", a: ["독립의 법칙", "독립의법칙", "독립 법칙"], e: "" },
+    { t: "mc", q: "자손 2대에서 둥글고 노란색인 완두가 900개 나왔다면, 주름지고 초록색인 완두는 이론상 몇 개인가?", tag: "계산", o: ["50개", "100개", "300개", "450개", "900개"], a: 1, e: "9 : 1 = 900 : x → x = <b>100</b>" },
+    { t: "essay", q: "자손 2대의 결과로부터 씨의 모양과 색깔을 결정하는 유전자가 서로 독립적으로 유전된다는 것을 어떻게 알 수 있는지 서술하시오.",
+      a: "자손 2대에서 씨의 모양만 보면 둥근 것 : 주름진 것 = <b>3 : 1</b>, 색깔만 보면 노란색 : 초록색 = <b>3 : 1</b>로, 각각의 형질이 서로 영향을 주지 않고 <b>분리의 법칙에 따라</b> 유전되었기 때문이다." }
+  ]);
+})();
+</script>
+</body>
+</html>
